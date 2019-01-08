@@ -155,14 +155,6 @@
 
 
 
-  
-<script type="text/javascript">
-    //微信二维码点击背景关闭
-    $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
-         $(".-mob-share-weixin-qrcode-close").trigger("click");
-    }); 
-</script>
-
 </head>
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -294,7 +286,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/离群点检测算法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/DOS命令/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风之行">
@@ -313,7 +305,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/06/离群点检测算法/" itemprop="url">离群点检测算法</a></h1>
+                <a class="post-title-link" href="/2019/01/06/DOS命令/" itemprop="url">DOS命令</a></h1>
         
 
         <div class="post-meta">
@@ -348,8 +340,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/windows/" itemprop="url" rel="index">
+                    <span itemprop="name">windows</span>
                   </a>
                 </span>
 
@@ -379,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  117
                 </span>
               
 
@@ -418,7 +410,8 @@
       
         
           
-            
+            <p>1、用SET PASSWORD命令<br>　　mysql -u root<br>　　mysql&gt; SET PASSWORD FOR ‘root‘@’localhost’ = PASSWORD(‘newpass’);<br>2、查看端口号<br>netstat -ano<br>3、连接远程服务器<br>mstsc<br>4、查看本机IP地址<br>ipconfig/all<br>5、将mysql所有权赋予root账户：<br>grant select,update,insert,delete on <em>.</em> to <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a> identified by “root”;<br>使操作生效：<br>flush privileges<br>创建账户root，密码为root：<br>create user ‘root’ identified by ‘root’;<br>6、打开服务<br>services.msc<br>7、连接远端或本地IP 端口号<br>telnet IP 端口号<br>Ctrl+]  回车（显示回显）</p>
+
           
         
       
@@ -654,7 +647,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/DOS命令/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/离群点检测算法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风之行">
@@ -673,7 +666,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/06/DOS命令/" itemprop="url">DOS命令</a></h1>
+                <a class="post-title-link" href="/2019/01/06/离群点检测算法/" itemprop="url">离群点检测算法</a></h1>
         
 
         <div class="post-meta">
@@ -708,8 +701,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/windows/" itemprop="url" rel="index">
-                    <span itemprop="name">windows</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -739,7 +732,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  117
+                  0
                 </span>
               
 
@@ -778,8 +771,7 @@
       
         
           
-            <p>1、用SET PASSWORD命令<br>　　mysql -u root<br>　　mysql&gt; SET PASSWORD FOR ‘root‘@’localhost’ = PASSWORD(‘newpass’);<br>2、查看端口号<br>netstat -ano<br>3、连接远程服务器<br>mstsc<br>4、查看本机IP地址<br>ipconfig/all<br>5、将mysql所有权赋予root账户：<br>grant select,update,insert,delete on <em>.</em> to <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a> identified by “root”;<br>使操作生效：<br>flush privileges<br>创建账户root，密码为root：<br>create user ‘root’ identified by ‘root’;<br>6、打开服务<br>services.msc<br>7、连接远端或本地IP 端口号<br>telnet IP 端口号<br>Ctrl+]  回车（显示回显）</p>
-
+            
           
         
       
@@ -1004,34 +996,7 @@
         
           
   
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" src="//music.163.com/outchain/player?type=2&id=573093480&auto=1&height=66"></iframe>
-
-<div id="days"></div>
-<script>
-    function show_date_time(){
-        window.setTimeout("show_date_time()", 1000);
-        BirthDay=new Date("01/08/2019 20:54:00");
-        today=new Date();
-        timeold=(today.getTime()-BirthDay.getTime());
-        sectimeold=timeold/1000
-        secondsold=Math.floor(sectimeold);
-        msPerDay=24*60*60*1000
-        e_daysold=timeold/msPerDay
-        daysold=Math.floor(e_daysold);
-        e_hrsold=(e_daysold-daysold)*24;
-        hrsold=setzero(Math.floor(e_hrsold));
-        e_minsold=(e_hrsold-hrsold)*60;
-        minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
-        seconds=setzero(Math.floor((e_minsold-minsold)*60));
-        document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
-    }
-function setzero(i){
-    if (i<10)
-    {i="0" + i};
-    return i;
-}
-show_date_time();
-</script>
+<embed src="//music.163.com/style/swf/widget.swf?sid=33367876&type=2&auto=1&width=320&height=66" width="340" height="86" allownetworking="all">
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -1137,34 +1102,7 @@ show_date_time();
           
           
 
-          <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" src="//music.163.com/outchain/player?type=2&id=573093480&auto=1&height=66"></iframe>
-
-<div id="days"></div>
-<script>
-    function show_date_time(){
-        window.setTimeout("show_date_time()", 1000);
-        BirthDay=new Date("01/08/2019 20:54:00");
-        today=new Date();
-        timeold=(today.getTime()-BirthDay.getTime());
-        sectimeold=timeold/1000
-        secondsold=Math.floor(sectimeold);
-        msPerDay=24*60*60*1000
-        e_daysold=timeold/msPerDay
-        daysold=Math.floor(e_daysold);
-        e_hrsold=(e_daysold-daysold)*24;
-        hrsold=setzero(Math.floor(e_hrsold));
-        e_minsold=(e_hrsold-hrsold)*60;
-        minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
-        seconds=setzero(Math.floor((e_minsold-minsold)*60));
-        document.getElementById('days').innerHTML="已运行"+daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒";
-    }
-function setzero(i){
-    if (i<10)
-    {i="0" + i};
-    return i;
-}
-show_date_time();
-</script>
+          <embed src="//music.163.com/style/swf/widget.swf?sid=33367876&type=2&auto=1&width=320&height=66" width="340" height="86" allownetworking="all">
         </div>
       </section>
 
