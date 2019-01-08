@@ -155,8 +155,15 @@
 
 
 
-</head>
+  
+<script type="text/javascript">
+    //微信二维码点击背景关闭
+    $('body').delegate('.-mob-share-weixin-qrcode-bg','click', function(){
+         $(".-mob-share-weixin-qrcode-close").trigger("click");
+    }); 
+</script>
 
+</head>
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
@@ -287,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/离群点检测算法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/DOS命令/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风之行">
@@ -306,7 +313,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/06/离群点检测算法/" itemprop="url">离群点检测算法</a></h1>
+                <a class="post-title-link" href="/2019/01/06/DOS命令/" itemprop="url">DOS命令</a></h1>
         
 
         <div class="post-meta">
@@ -341,8 +348,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/windows/" itemprop="url" rel="index">
+                    <span itemprop="name">windows</span>
                   </a>
                 </span>
 
@@ -372,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  117
                 </span>
               
 
@@ -411,7 +418,8 @@
       
         
           
-            
+            <p>1、用SET PASSWORD命令<br>　　mysql -u root<br>　　mysql&gt; SET PASSWORD FOR ‘root‘@’localhost’ = PASSWORD(‘newpass’);<br>2、查看端口号<br>netstat -ano<br>3、连接远程服务器<br>mstsc<br>4、查看本机IP地址<br>ipconfig/all<br>5、将mysql所有权赋予root账户：<br>grant select,update,insert,delete on <em>.</em> to <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a> identified by “root”;<br>使操作生效：<br>flush privileges<br>创建账户root，密码为root：<br>create user ‘root’ identified by ‘root’;<br>6、打开服务<br>services.msc<br>7、连接远端或本地IP 端口号<br>telnet IP 端口号<br>Ctrl+]  回车（显示回显）</p>
+
           
         
       
@@ -647,7 +655,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/DOS命令/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/离群点检测算法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="风之行">
@@ -666,7 +674,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/06/DOS命令/" itemprop="url">DOS命令</a></h1>
+                <a class="post-title-link" href="/2019/01/06/离群点检测算法/" itemprop="url">离群点检测算法</a></h1>
         
 
         <div class="post-meta">
@@ -701,8 +709,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/windows/" itemprop="url" rel="index">
-                    <span itemprop="name">windows</span>
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -1139,7 +1147,7 @@
 <span class="post-meta-divider">|</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共73字</span>
+  <span class="post-count">博客全站共190字</span>
 </div>
 <br>
 <div class="powered-by">
