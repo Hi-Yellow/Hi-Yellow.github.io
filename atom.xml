@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-08T08:31:31.105Z</updated>
+  <updated>2019-01-09T11:51:51.808Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,19 +17,135 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>DOS命令</title>
-    <link href="http://yoursite.com/2019/01/06/DOS%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2019/01/06/DOS命令/</id>
-    <published>2019-01-06T09:15:25.000Z</published>
-    <updated>2019-01-08T08:31:31.105Z</updated>
+    <title>锁</title>
+    <link href="http://yoursite.com/2019/01/09/%E9%94%81/"/>
+    <id>http://yoursite.com/2019/01/09/锁/</id>
+    <published>2019-01-09T11:51:51.000Z</published>
+    <updated>2019-01-09T11:51:51.808Z</updated>
     
-    <content type="html"><![CDATA[<p>1、用SET PASSWORD命令<br>　　mysql -u root<br>　　mysql&gt; SET PASSWORD FOR ‘root‘@’localhost’ = PASSWORD(‘newpass’);<br>2、查看端口号<br>netstat -ano<br>3、连接远程服务器<br>mstsc<br>4、查看本机IP地址<br>ipconfig/all<br>5、将mysql所有权赋予root账户：<br>grant select,update,insert,delete on <em>.</em> to <a href="mailto:root@127.0.0.1" target="_blank" rel="noopener">root@127.0.0.1</a> identified by “root”;<br>使操作生效：<br>flush privileges<br>创建账户root，密码为root：<br>create user ‘root’ identified by ‘root’;<br>6、打开服务<br>services.msc<br>7、连接远端或本地IP 端口号<br>telnet IP 端口号<br>Ctrl+]  回车（显示回显）</p>]]></content>
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>离群点检测</title>
+    <link href="http://yoursite.com/2019/01/09/%E7%A6%BB%E7%BE%A4%E7%82%B9%E6%A3%80%E6%B5%8B/"/>
+    <id>http://yoursite.com/2019/01/09/离群点检测/</id>
+    <published>2019-01-09T11:51:39.000Z</published>
+    <updated>2019-01-09T11:51:39.094Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>垃圾回收机制</title>
+    <link href="http://yoursite.com/2019/01/09/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/"/>
+    <id>http://yoursite.com/2019/01/09/垃圾回收机制/</id>
+    <published>2019-01-09T11:50:58.000Z</published>
+    <updated>2019-01-09T11:50:58.396Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>springmvc</title>
+    <link href="http://yoursite.com/2019/01/09/springmvc/"/>
+    <id>http://yoursite.com/2019/01/09/springmvc/</id>
+    <published>2019-01-09T11:50:25.000Z</published>
+    <updated>2019-01-09T11:50:26.048Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>spring</title>
+    <link href="http://yoursite.com/2019/01/09/spring/"/>
+    <id>http://yoursite.com/2019/01/09/spring/</id>
+    <published>2019-01-09T11:50:14.000Z</published>
+    <updated>2019-01-09T11:50:15.020Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>php</title>
+    <link href="http://yoursite.com/2019/01/09/php/"/>
+    <id>http://yoursite.com/2019/01/09/php/</id>
+    <published>2019-01-09T11:49:46.000Z</published>
+    <updated>2019-01-09T11:49:46.536Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>mybatis</title>
+    <link href="http://yoursite.com/2019/01/09/mybatis/"/>
+    <id>http://yoursite.com/2019/01/09/mybatis/</id>
+    <published>2019-01-09T11:49:21.000Z</published>
+    <updated>2019-01-09T11:49:21.599Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>linux</title>
+    <link href="http://yoursite.com/2019/01/09/linux/"/>
+    <id>http://yoursite.com/2019/01/09/linux/</id>
+    <published>2019-01-09T11:48:37.000Z</published>
+    <updated>2019-01-09T11:48:37.106Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo命令</title>
+    <link href="http://yoursite.com/2019/01/09/Hexo%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/01/09/Hexo命令/</id>
+    <published>2019-01-09T07:46:19.000Z</published>
+    <updated>2019-01-09T08:58:41.183Z</updated>
+    
+    <content type="html"><![CDATA[<hr><ol><li><strong>常用hexo命令</strong></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo new &quot;postName&quot; #新建文章</span><br><span class="line">hexo new page &quot;pageName&quot; #新建页面</span><br><span class="line">hexo generate #生成静态页面至public目录</span><br><span class="line">hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">hexo deploy #部署到GitHub</span><br><span class="line">hexo help  # 查看帮助</span><br><span class="line">hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure><ol start="2"><li><strong>缩写：</strong></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo n == hexo new</span><br><span class="line">hexo g == hexo generate</span><br><span class="line">hexo s == hexo server</span><br><span class="line">hexo d == hexo deploy</span><br></pre></td></tr></table></figure><ol start="3"><li><strong>组合命令：</strong></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo s -g #生成并本地预览</span><br><span class="line">hexo d -g #生成并上传</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;1、用SET PASSWORD命令&lt;br&gt;　　mysql -u root&lt;br&gt;　　mysql&amp;gt; SET PASSWORD FOR ‘root‘@’localhost’ = PASSWORD(‘newpass’);&lt;br&gt;2、查看端口号&lt;br&gt;netstat -ano
+        &lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;常用hexo命令&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/
       
     
     </summary>
@@ -37,21 +153,7 @@
       <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
     
     
-  </entry>
-  
-  <entry>
-    <title>离群点检测算法</title>
-    <link href="http://yoursite.com/2019/01/06/%E7%A6%BB%E7%BE%A4%E7%82%B9%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2019/01/06/离群点检测算法/</id>
-    <published>2019-01-06T09:15:25.000Z</published>
-    <updated>2019-01-08T08:09:20.895Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
     
   </entry>
   
@@ -60,9 +162,17 @@
     <link href="http://yoursite.com/2019/01/06/java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/01/06/java排序算法/</id>
     <published>2019-01-06T09:15:25.000Z</published>
-    <updated>2019-01-08T07:39:29.358Z</updated>
+    <updated>2019-01-09T11:45:07.227Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="一、冒泡排序"><a href="#一、冒泡排序" class="headerlink" title="一、冒泡排序"></a>一、冒泡排序</h3><h4 id="1-1-快速排序的基本思想："><a href="#1-1-快速排序的基本思想：" class="headerlink" title="1.1 快速排序的基本思想："></a>1.1 快速排序的基本思想：</h4><p>​    冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。</p><h4 id="1-2-冒泡排序的示例："><a href="#1-2-冒泡排序的示例：" class="headerlink" title="1.2 冒泡排序的示例："></a>1.2 冒泡排序的示例：</h4><p><img src="https://img-blog.csdnimg.cn/20181206114143449.?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="img"></p><h4 id="1-3-冒泡排序的算法实现如下-【排序后，数组从小到大排列】"><a href="#1-3-冒泡排序的算法实现如下-【排序后，数组从小到大排列】" class="headerlink" title="1.3 冒泡排序的算法实现如下:【排序后，数组从小到大排列】"></a>1.3 冒泡排序的算法实现如下:【排序后，数组从小到大排列】</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * 比较相邻的元素。如果第一个比第二个大，就交换他们两个。   </span><br><span class="line">   * 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。  </span><br><span class="line">   * 针对所有的元素重复以上的步骤，除了最后一个。</span><br><span class="line">   * 持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</span><br><span class="line">   * @param numbers 需要排序的整型数组</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">public static void bubbleSort(int[] numbers) &#123;</span><br><span class="line">    int temp = 0;</span><br><span class="line">    int size = numbers.length;</span><br><span class="line">    for(int i = 0 ; i &lt; size-1; i ++) &#123;</span><br><span class="line">       for(int j = 0 ;j &lt; size-1-i ; j++) &#123;</span><br><span class="line">          if(numbers[j] &gt; numbers[j+1]) &#123;   //交换两数位置</span><br><span class="line">           temp = numbers[j];</span><br><span class="line">           numbers[j] = numbers[j+1];</span><br><span class="line">           numbers[j+1] = temp;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="二、快速排序"><a href="#二、快速排序" class="headerlink" title="二、快速排序"></a>二、快速排序</h3><h4 id="2-1-快速排序的基本思想："><a href="#2-1-快速排序的基本思想：" class="headerlink" title="2.1 快速排序的基本思想："></a>2.1 快速排序的基本思想：</h4><p>​    通过一趟排序将待排序记录分割成独立的两部分，其中一部分记录的关键字均比另一部分关键字小，则分别对这两部分继续进行排序，直到整个序列有序。</p><h4 id="2-2-快速排序的示例："><a href="#2-2-快速排序的示例：" class="headerlink" title="2.2 快速排序的示例："></a>2.2 快速排序的示例：</h4><h5 id="2-2-1-一趟排序的过程："><a href="#2-2-1-一趟排序的过程：" class="headerlink" title="2.2.1 一趟排序的过程："></a>2.2.1 一趟排序的过程：</h5><p><img src="https://img-blog.csdnimg.cn/20181206114630379.?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><h5 id="2-2-2-排序的全过程："><a href="#2-2-2-排序的全过程：" class="headerlink" title="2.2.2 排序的全过程："></a>2.2.2 排序的全过程：</h5><p><img src="https://img-blog.csdnimg.cn/20181206114652417.?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>​    把整个序列看做一个数组，把第零个位置看做中轴，和最后一个比，如果比它小交换，比它大不做任何处理；交换了以后再和小的那端比，比它小不交换，比他大交换。这样循环往复，一趟排序完成，左边就是比中轴小的，右边就是比中轴大的，然后再用分治法，分别对这两个独立的数组进行排序。</p><h4 id="2-3-代码实现如下："><a href="#2-3-代码实现如下：" class="headerlink" title="2.3 代码实现如下："></a>2.3 代码实现如下：</h4><h5 id="2-3-1-查找中轴（最低位作为中轴）所在位置"><a href="#2-3-1-查找中轴（最低位作为中轴）所在位置" class="headerlink" title="2.3.1 查找中轴（最低位作为中轴）所在位置"></a>2.3.1 查找中轴（最低位作为中轴）所在位置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * 查找出中轴（默认是最低位low）的在numbers数组排序后所在位置</span><br><span class="line">   * @param numbers 待查找数组</span><br><span class="line">   * @param low   开始位置</span><br><span class="line">   * @param high  结束位置</span><br><span class="line">   * @return  中轴所在位置</span><br><span class="line">*/</span><br><span class="line">public static int getMiddle(int[] numbers, int low,int high) &#123;</span><br><span class="line">      int temp = numbers[low];              //数组的第一个作为中轴</span><br><span class="line">      while(low &lt; high) &#123;</span><br><span class="line">       while(low &lt; high &amp;&amp; numbers[high] &gt; temp) &#123;</span><br><span class="line">           high--;</span><br><span class="line">       &#125;</span><br><span class="line">        numbers[low] = numbers[high];    //比中轴小的记录移到低端</span><br><span class="line">       while(low &lt; high &amp;&amp; numbers[low] &lt; temp)&#123;</span><br><span class="line">           low++;</span><br><span class="line">       &#125;</span><br><span class="line">       numbers[high] = numbers[low] ;       //比中轴大的记录移到高端</span><br><span class="line">      &#125;</span><br><span class="line">      numbers[low] = temp ;                  //中轴记录到尾</span><br><span class="line">      return low ;                           // 返回中轴的位置</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="2-3-2-递归形式的分治排序算法："><a href="#2-3-2-递归形式的分治排序算法：" class="headerlink" title="2.3.2 递归形式的分治排序算法："></a>2.3.2 递归形式的分治排序算法：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * @param numbers 带排序数组</span><br><span class="line">   * @param low  开始位置</span><br><span class="line">   * @param high 结束位置</span><br><span class="line">*/</span><br><span class="line">public static void quickSort(int[] numbers,int low,int high)&#123;</span><br><span class="line"> if(low &lt; high)&#123;</span><br><span class="line">    int middle = getMiddle(numbers,low,high); //将numbers数组进行一分为二</span><br><span class="line">    quickSort(numbers, low, middle-1);  //对低字段表进行递归排序</span><br><span class="line">    quickSort(numbers, middle+1, high); //对高字段表进行递归排序</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="2-3-3-快速排序提供方法调用"><a href="#2-3-3-快速排序提供方法调用" class="headerlink" title="2.3.3 快速排序提供方法调用"></a>2.3.3 快速排序提供方法调用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * @param numbers 带排序数组</span><br><span class="line">*/</span><br><span class="line">public static void quick(int[] numbers)&#123;</span><br><span class="line">    if(numbers.length &gt; 0) &#123;  //查看数组是否为空</span><br><span class="line">        quickSort(numbers, 0, numbers.length-1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="2-4-分析："><a href="#2-4-分析：" class="headerlink" title="2.4 分析："></a>2.4 分析：</h4><p>​    快速排序是通常被认为在同数量级（O(nlog2n)）的排序方法中平均性能最好的。但若初始序列按关键码有序或基本有序时，快排序反而蜕化为冒泡排序。为改进之，通常以“三者取中法”来选取基准记录，即将排序区间的两个端点与中点三个记录关键码居中的调整为支点记录。快速排序是一个不稳定的排序方法。</p><h4 id="2-5-方法测试："><a href="#2-5-方法测试：" class="headerlink" title="2.5 方法测试："></a>2.5 方法测试：</h4><h5 id="2-5-1-打印函数："><a href="#2-5-1-打印函数：" class="headerlink" title="2.5.1 打印函数："></a>2.5.1 打印函数：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static void printArr(int[] numbers) &#123;</span><br><span class="line">     for(int i = 0 ; i &lt; numbers.length ; i ++ ) &#123;</span><br><span class="line">       System.out.print(numbers[i] + &quot;,&quot;);</span><br><span class="line">     &#125;</span><br><span class="line">     System.out.println(&quot;&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="2-5-2-测试："><a href="#2-5-2-测试：" class="headerlink" title="2.5.2 测试："></a>2.5.2 测试：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">    int[] numbers = &#123;10,20,15,0,6,7,2,1,-5,55&#125;;</span><br><span class="line">    System.out.print(&quot;排序前：&quot;);</span><br><span class="line">    printArr(numbers);</span><br><span class="line">    bubbleSort(numbers);</span><br><span class="line">    System.out.print(&quot;冒泡排序后：&quot;);</span><br><span class="line">    printArr(numbers);</span><br><span class="line">    quick(numbers);</span><br><span class="line">    System.out.print(&quot;快速排序后：&quot;);</span><br><span class="line">    printArr(numbers);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="2-5-3-结果："><a href="#2-5-3-结果：" class="headerlink" title="2.5.3 结果："></a>2.5.3 结果：</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">排序前：10,20,15,0,6,7,2,1,-5,55,</span><br><span class="line">冒泡排序后：-5,0,1,2,6,7,10,15,20,55,</span><br><span class="line">快速排序后：-5,0,1,2,6,7,10,15,20,55,</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;一、冒泡排序&quot;&gt;&lt;a href=&quot;#一、冒泡排序&quot; class=&quot;headerlink&quot; title=&quot;一、冒泡排序&quot;&gt;&lt;/a&gt;一、冒泡排序&lt;/h3&gt;&lt;h4 id=&quot;1-1-快速排序的基本思想：&quot;&gt;&lt;a href=&quot;#1-1-快速排序的基本思想：&quot; cl
+      
     
     </summary>
     
@@ -72,23 +182,30 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2019/01/06/hello-world/"/>
-    <id>http://yoursite.com/2019/01/06/hello-world/</id>
-    <published>2019-01-06T09:04:03.769Z</published>
-    <updated>2019-01-08T08:26:00.785Z</updated>
+    <title>DOS命令</title>
+    <link href="http://yoursite.com/2019/01/06/DOS%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/01/06/DOS命令/</id>
+    <published>2019-01-06T09:15:25.000Z</published>
+    <updated>2019-01-09T08:58:35.916Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<hr><ol><li><p><strong>用set password命令：</strong></p><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p></li><li><p><strong>查看端口号：</strong></p><p><code>netstat -ano</code></p></li><li><p><strong>连接远程服务器：</strong></p><p><code>mstsc</code></p></li><li><p><strong>查看本机ip地址：</strong><br><code>ipconfig/all</code></p></li><li><p><strong>将mysql所有权赋予root账户：</strong><br><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p></li><li><p><strong>使操作生效：</strong><br><code>flush privileges</code></p></li><li><p><strong>创建账户root，密码为root：</strong></p><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p></li><li><p><strong>打开服务：</strong></p><p><code>services.msc</code></p></li><li><p><strong>连接远端或本地ip 端口号：</strong></p><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p></li></ol>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+        &lt;hr&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;用set password命令：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mysql -u root&lt;/code&gt;&lt;br&gt;&lt;code&gt;mysql&amp;gt; SET PASSWORD FOR &amp;#39;root&amp;#39;@&amp;#39
       
     
     </summary>
     
+      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
+    
+    
+      <category term="DOS" scheme="http://yoursite.com/tags/DOS/"/>
     
   </entry>
   
