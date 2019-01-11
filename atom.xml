@@ -204,32 +204,6 @@
   </entry>
   
   <entry>
-    <title>DOS命令</title>
-    <link href="http://yoursite.com/2019/01/09/DOS%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2019/01/09/DOS命令/</id>
-    <published>2019-01-09T09:15:25.000Z</published>
-    <updated>2019-01-09T14:16:25.663Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
-      
-    
-    </summary>
-    
-      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
-    
-    
-      <category term="DOS" scheme="http://yoursite.com/tags/DOS/"/>
-    
-  </entry>
-  
-  <entry>
     <title>java排序算法</title>
     <link href="http://yoursite.com/2019/01/09/java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/01/09/java排序算法/</id>
@@ -252,6 +226,32 @@
     
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DOS命令</title>
+    <link href="http://yoursite.com/2019/01/09/DOS%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/01/09/DOS命令/</id>
+    <published>2019-01-09T09:15:25.000Z</published>
+    <updated>2019-01-09T14:16:25.663Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
+    
+    
+      <category term="DOS" scheme="http://yoursite.com/tags/DOS/"/>
     
   </entry>
   
