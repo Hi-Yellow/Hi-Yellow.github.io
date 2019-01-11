@@ -114,6 +114,24 @@
   </entry>
   
   <entry>
+    <title>乐观锁和悲观锁</title>
+    <link href="http://yoursite.com/2019/01/09/%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81/"/>
+    <id>http://yoursite.com/2019/01/09/乐观锁和悲观锁/</id>
+    <published>2019-01-09T11:51:51.000Z</published>
+    <updated>2019-01-10T09:30:37.483Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="Java面经" scheme="http://yoursite.com/categories/Java%E9%9D%A2%E7%BB%8F/"/>
+    
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>LOF离群点检测</title>
     <link href="http://yoursite.com/2019/01/09/LOF%E7%A6%BB%E7%BE%A4%E7%82%B9%E6%A3%80%E6%B5%8B/"/>
     <id>http://yoursite.com/2019/01/09/LOF离群点检测/</id>
