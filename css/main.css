@@ -2005,7 +2005,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #eed52a;
+  background: #bbff81;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3191,9 +3191,4 @@ pre {
 }
 .site-meta {
   background: #0684bd;
-}
-body {
-  background-image: url("/images/background.jpg");
-  background-attachment: fixed;
-  background-repeat: no-repeat;
 }
