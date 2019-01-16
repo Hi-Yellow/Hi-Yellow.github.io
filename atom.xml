@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-16T09:22:43.359Z</updated>
+  <updated>2019-01-16T10:06:19.250Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>请求--响应过程</title>
+    <link href="http://yoursite.com/2019/01/16/%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E8%BF%87%E7%A8%8B/"/>
+    <id>http://yoursite.com/2019/01/16/请求-响应过程/</id>
+    <published>2019-01-16T09:50:37.000Z</published>
+    <updated>2019-01-16T10:06:19.250Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p><img src="https://img-blog.csdnimg.cn/20190116175532566.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>1、客户端发出 http 请求，只要请求形式符合 web.xml 文件中配置的 *.action 的话，就由 DispatcherServlet 来处理；</p><p>2、DispatcherServlet 再将 http 请求委托给映射器的对象来将 http 请求交给对应的 Action 来处理；</p><p>3、映射器根据客户的 http 请求，再对比 &lt;bean name=”/hello.action 如果匹配正确，再将 http 请求交给程序员写的 Action；</p><p>4、执行 Action 中的业务方法，最终返回一个名叫 ModelAndView 的对象，其中封装了向视图发送的数据和视图的逻辑名；</p><p>5、ModelAndView 对象随着响应到 DispatcherServlet 中了；</p><p>6、这时 DispatcherServlet 收到了 ModelAndView 对象，它也不知道视图逻辑名是何意，又得委托一个名叫视图解析器的对象去具体解析 ModelAndView 对象中的内容；</p><p>7、将视图解析器解析后的内容，再次交由 DispatcherServlet 核心控制器，这时核心控制器再将请求转发到具体的视图页面，取出数据，再显示给用户。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;&lt;img src=&quot;https://img-blog.csdnimg.cn/20190116175532566.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aH
+      
+    
+    </summary>
+    
+      <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
+    
+    
+      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
+    
+  </entry>
   
   <entry>
     <title>传能光纤链路状态检测系统</title>
@@ -40,9 +66,9 @@
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
       <category term="jsp" scheme="http://yoursite.com/tags/jsp/"/>
     
@@ -236,32 +262,6 @@
   </entry>
   
   <entry>
-    <title>DOS命令</title>
-    <link href="http://yoursite.com/2019/01/09/DOS%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2019/01/09/DOS命令/</id>
-    <published>2019-01-09T09:15:25.000Z</published>
-    <updated>2019-01-09T14:16:25.663Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
-      
-    
-    </summary>
-    
-      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
-    
-    
-      <category term="DOS" scheme="http://yoursite.com/tags/DOS/"/>
-    
-  </entry>
-  
-  <entry>
     <title>java排序算法</title>
     <link href="http://yoursite.com/2019/01/09/java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/01/09/java排序算法/</id>
@@ -284,6 +284,32 @@
     
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DOS命令</title>
+    <link href="http://yoursite.com/2019/01/09/DOS%E5%91%BD%E4%BB%A4/"/>
+    <id>http://yoursite.com/2019/01/09/DOS命令/</id>
+    <published>2019-01-09T09:15:25.000Z</published>
+    <updated>2019-01-09T14:16:25.663Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
+    
+    
+      <category term="DOS" scheme="http://yoursite.com/tags/DOS/"/>
     
   </entry>
   
