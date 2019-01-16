@@ -118,9 +118,9 @@
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
-    
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
       <category term="jsp" scheme="http://yoursite.com/tags/jsp/"/>
     
