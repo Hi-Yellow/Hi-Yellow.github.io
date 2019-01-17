@@ -90,7 +90,7 @@
 
 
 
-  <meta name="keywords" content="python,mysql,java,jsp,">
+  <meta name="keywords" content="mysql,java,python,jsp,">
 
 
 
@@ -104,21 +104,21 @@
 
 
 <meta name="description" content="一、javaweb知识点总结1.1 常见的java调用python脚本两种方式 通过jython.jar提供的类库实现 通过Runtime.getRuntime()开启进程来执行脚本文件  1.2 java调用python程序实现web服务功能使用Runtime.getRuntime()执行脚本文件，这种方式和cmd中使用python+文件名的命令调用python程序相同。 1、配置文件reso">
-<meta name="keywords" content="python,mysql,java,jsp">
+<meta name="keywords" content="mysql,java,python,jsp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="传能光纤链路状态检测系统">
 <meta property="og:url" content="http://yoursite.com/2019/01/16/传能光纤链路状态检测系统/index.html">
 <meta property="og:site_name" content="Hi-Yellow">
 <meta property="og:description" content="一、javaweb知识点总结1.1 常见的java调用python脚本两种方式 通过jython.jar提供的类库实现 通过Runtime.getRuntime()开启进程来执行脚本文件  1.2 java调用python程序实现web服务功能使用Runtime.getRuntime()执行脚本文件，这种方式和cmd中使用python+文件名的命令调用python程序相同。 1、配置文件reso">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2019011617000936.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190116165751236.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190116170057462.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-01-16T09:22:43.359Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190117192055350.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190117192240356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190117192338463.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-01-17T11:24:30.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="传能光纤链路状态检测系统">
 <meta name="twitter:description" content="一、javaweb知识点总结1.1 常见的java调用python脚本两种方式 通过jython.jar提供的类库实现 通过Runtime.getRuntime()开启进程来执行脚本文件  1.2 java调用python程序实现web服务功能使用Runtime.getRuntime()执行脚本文件，这种方式和cmd中使用python+文件名的命令调用python程序相同。 1、配置文件reso">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019011617000936.png">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190117192055350.png">
 
 
 
@@ -422,7 +422,7 @@
 </ul>
 <h4 id="1-2-java调用python程序实现web服务功能"><a href="#1-2-java调用python程序实现web服务功能" class="headerlink" title="1.2 java调用python程序实现web服务功能"></a>1.2 java调用python程序实现web服务功能</h4><p>使用Runtime.getRuntime()执行脚本文件，这种方式和cmd中使用python+文件名的命令调用python程序相同。</p>
 <p><strong>1、配置文件resource.properties</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/2019011617000936.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20190117192055350.png" alt="resource"></p>
 <p><strong>2、工具类TestUtils</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class TestUtils &#123;</span><br><span class="line">	public static int JavaTransferPython(String PythonPath,String FilePath) &#123;</span><br><span class="line">		final String PYTHON_PATH = PythonPath;  //python.exe可执行文件的存放路径</span><br><span class="line">		final String FILE_PATH = FilePath;      //test.py程序的存放路径</span><br><span class="line">		String result=&quot;&quot;;</span><br><span class="line">		Process proc;</span><br><span class="line">		try &#123;</span><br><span class="line">			String [] cmd =new String []&#123;PYTHON_PATH,FILE_PATH&#125;;</span><br><span class="line">			proc = Runtime.getRuntime().exec(cmd);// 执行py文件</span><br><span class="line">            //用输入输出流来截取结果</span><br><span class="line">			BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));</span><br><span class="line">			String line = null;</span><br><span class="line">			while ((line = in.readLine()) != null) &#123;</span><br><span class="line">				System.out.println(line);</span><br><span class="line">		&#125;</span><br><span class="line">		in.close();</span><br><span class="line">		proc.waitFor();   //在此需要注意的一点，java代码中的proc.waitFor()值为0表示我们调用python脚本成功，返回值为1表示调用python脚本失败，这和我们通常意义上见到的0与1定义正好相反。</span><br><span class="line">            return 1;        //因为web工程是请求-响应式的，只有请求而无响应，会报400错误。此处请求成功，返回1。</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return 0;        //请求失败，返回0。</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            return 0;        //请求失败，返回0。</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>3、service层中定义方法名</strong></p>
@@ -438,7 +438,7 @@
 <p><strong>8、Mapper.xml</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;select id=&quot;selectPageListUseDyc&quot; parameterType=&quot;page&quot; resultMap=&quot;###&quot; &gt;</span><br><span class="line">	SELECT * ### </span><br><span class="line">	&lt;where&gt;</span><br><span class="line">		&lt;if test=&quot;paramEntity.index!=null&quot;&gt;and `index` = #&#123;paramEntity.index&#125;&lt;/if&gt;    &lt;!-- 字段index和数据库的index关键字同名，故改为`index`。index字段若为int型，可以用 = 或者like；若为String型，用like--&gt;</span><br><span class="line">	&lt;/where&gt; </span><br><span class="line">	limit #&#123;start&#125;,#&#123;rows&#125;</span><br><span class="line">&lt;/select&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>9、SQLyog 导出数据库</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/20190116165751236.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20190117192240356.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="sql"></p>
 <p><strong>注意：</strong>导出数据库是应该按图中标记所设置，以便重新导入该数据库时，无法导入！！！</p>
 <p><strong>10、Tomcat做图片服务器</strong></p>
 <ul>
@@ -452,8 +452,8 @@
 <li><p>效果如下：</p>
 </li>
 </ul>
-<p><img src="https://img-blog.csdnimg.cn/20190116170057462.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="二、python知识点总结"><a href="#二、python知识点总结" class="headerlink" title="二、python知识点总结"></a>二、python知识点总结</h3><h4 id="2-1-python拼接图片"><a href="#2-1-python拼接图片" class="headerlink" title="2.1 python拼接图片"></a>2.1 python拼接图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import PIL.Image as Image</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">#定义图像拼接函数</span><br><span class="line">def image_compose():</span><br><span class="line">    to_image = Image.new(&apos;RGB&apos;, (IMAGE_COLUMN * IMAGE_SIZE, IMAGE_ROW * IMAGE_SIZE))  # 创建一个新图循环遍历，把每张图片按顺序粘贴到对应位置上</span><br><span class="line">    for y in range(1, IMAGE_ROW + 1):</span><br><span class="line">        for x in range(1, IMAGE_COLUMN + 1):</span><br><span class="line">            from_image = Image.open(IMAGES_PATH + image_names[IMAGE_COLUMN * (y - 1) + x - 1]).resize(</span><br><span class="line">                (IMAGE_SIZE, IMAGE_SIZE), Image.ANTIALIAS)</span><br><span class="line">            to_image.paste(from_image, ((x - 1) * IMAGE_SIZE, (y - 1) * IMAGE_SIZE))</span><br><span class="line">    return to_image.save(IMAGE_SAVE_PATH)  # 保存新图</span><br><span class="line"></span><br><span class="line">IMAGES_PATH = &apos;###&apos;  # 图片集地址</span><br><span class="line">IMAGES_FORMAT = [ &apos;.png&apos;]  # 图片格式</span><br><span class="line">IMAGE_SIZE = 600  # 每张小图片的大小     600=1200 * 600</span><br><span class="line">IMAGE_ROW = 1  # 图片间隔，也就是合并成一张图后，一共有几行</span><br><span class="line">IMAGE_COLUMN = 2  # 图片间隔，也就是合并成一张图后，一共有几列</span><br><span class="line">IMAGE_SAVE_PATH = &apos;###&apos;  # 图片转换后的地址</span><br><span class="line"></span><br><span class="line"># 获取图片集地址下的所有图片名称</span><br><span class="line">image_names = [name for name in os.listdir(IMAGES_PATH) for item in IMAGES_FORMAT if os.path.splitext(name)[1] == item]</span><br><span class="line">image_compose()  # 调用函数</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190117192338463.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="test"></p>
+<h4 id="2-1-python拼接图片"><a href="#2-1-python拼接图片" class="headerlink" title="2.1 python拼接图片"></a>2.1 python拼接图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import PIL.Image as Image</span><br><span class="line">import os</span><br><span class="line"></span><br><span class="line">#定义图像拼接函数</span><br><span class="line">def image_compose():</span><br><span class="line">    to_image = Image.new(&apos;RGB&apos;, (IMAGE_COLUMN * IMAGE_SIZE, IMAGE_ROW * IMAGE_SIZE))  # 创建一个新图循环遍历，把每张图片按顺序粘贴到对应位置上</span><br><span class="line">    for y in range(1, IMAGE_ROW + 1):</span><br><span class="line">        for x in range(1, IMAGE_COLUMN + 1):</span><br><span class="line">            from_image = Image.open(IMAGES_PATH + image_names[IMAGE_COLUMN * (y - 1) + x - 1]).resize(</span><br><span class="line">                (IMAGE_SIZE, IMAGE_SIZE), Image.ANTIALIAS)</span><br><span class="line">            to_image.paste(from_image, ((x - 1) * IMAGE_SIZE, (y - 1) * IMAGE_SIZE))</span><br><span class="line">    return to_image.save(IMAGE_SAVE_PATH)  # 保存新图</span><br><span class="line"></span><br><span class="line">IMAGES_PATH = &apos;###&apos;  # 图片集地址</span><br><span class="line">IMAGES_FORMAT = [ &apos;.png&apos;]  # 图片格式</span><br><span class="line">IMAGE_SIZE = 600  # 每张小图片的大小     600=1200 * 600</span><br><span class="line">IMAGE_ROW = 1  # 图片间隔，也就是合并成一张图后，一共有几行</span><br><span class="line">IMAGE_COLUMN = 2  # 图片间隔，也就是合并成一张图后，一共有几列</span><br><span class="line">IMAGE_SAVE_PATH = &apos;###&apos;  # 图片转换后的地址</span><br><span class="line"></span><br><span class="line"># 获取图片集地址下的所有图片名称</span><br><span class="line">image_names = [name for name in os.listdir(IMAGES_PATH) for item in IMAGES_FORMAT if os.path.splitext(name)[1] == item]</span><br><span class="line">image_compose()  # 调用函数</span><br></pre></td></tr></table></figure>
 <p><strong>2.2 python程序导入第三方库或模块</strong></p>
 <ul>
 <li>通过快捷键<em>Alt+Enter</em>或者<em>Ctrl+两次空格</em>；</li>
@@ -523,11 +523,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
-          
             <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
           
             <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          
+            <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
           
             <a href="/tags/jsp/" rel="tag"><i class="fa fa-tag"></i> jsp</a>
           
@@ -763,7 +763,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、javaweb知识点总结"><span class="nav-number">1.</span> <span class="nav-text">一、javaweb知识点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-常见的java调用python脚本两种方式"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 常见的java调用python脚本两种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-java调用python程序实现web服务功能"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 java调用python程序实现web服务功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、python知识点总结"><span class="nav-number">2.</span> <span class="nav-text">二、python知识点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-python拼接图片"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 python拼接图片</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、javaweb知识点总结"><span class="nav-number">1.</span> <span class="nav-text">一、javaweb知识点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-常见的java调用python脚本两种方式"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 常见的java调用python脚本两种方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-java调用python程序实现web服务功能"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 java调用python程序实现web服务功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-python拼接图片"><span class="nav-number">1.3.</span> <span class="nav-text">2.1 python拼接图片</span></a></li></ol></li></ol></div>
             
 
           </div>
