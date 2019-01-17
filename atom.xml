@@ -69,11 +69,11 @@
   </entry>
   
   <entry>
-    <title>请求--响应过程</title>
-    <link href="http://yoursite.com/2019/01/16/%E8%AF%B7%E6%B1%82-%E5%93%8D%E5%BA%94%E8%BF%87%E7%A8%8B/"/>
-    <id>http://yoursite.com/2019/01/16/请求-响应过程/</id>
+    <title>Spring MVC的请求过程</title>
+    <link href="http://yoursite.com/2019/01/16/Spring%20MVC%E7%9A%84%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/"/>
+    <id>http://yoursite.com/2019/01/16/Spring MVC的请求过程/</id>
     <published>2019-01-16T09:50:37.000Z</published>
-    <updated>2019-01-16T10:06:19.250Z</updated>
+    <updated>2019-01-17T03:27:28.571Z</updated>
     
     <content type="html"><![CDATA[<hr><p><img src="https://img-blog.csdnimg.cn/20190116175532566.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>1、客户端发出 http 请求，只要请求形式符合 web.xml 文件中配置的 *.action 的话，就由 DispatcherServlet 来处理；</p><p>2、DispatcherServlet 再将 http 请求委托给映射器的对象来将 http 请求交给对应的 Action 来处理；</p><p>3、映射器根据客户的 http 请求，再对比 &lt;bean name=”/hello.action 如果匹配正确，再将 http 请求交给程序员写的 Action；</p><p>4、执行 Action 中的业务方法，最终返回一个名叫 ModelAndView 的对象，其中封装了向视图发送的数据和视图的逻辑名；</p><p>5、ModelAndView 对象随着响应到 DispatcherServlet 中了；</p><p>6、这时 DispatcherServlet 收到了 ModelAndView 对象，它也不知道视图逻辑名是何意，又得委托一个名叫视图解析器的对象去具体解析 ModelAndView 对象中的内容；</p><p>7、将视图解析器解析后的内容，再次交由 DispatcherServlet 核心控制器，这时核心控制器再将请求转发到具体的视图页面，取出数据，再显示给用户。</p>]]></content>
     
@@ -118,9 +118,9 @@
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="jsp" scheme="http://yoursite.com/tags/jsp/"/>
     
