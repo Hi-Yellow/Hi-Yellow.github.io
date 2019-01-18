@@ -103,20 +103,20 @@
 
 
 
-<meta name="description" content="一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示  jsp，html……） C-Controller 控制器（接收请求—&amp;gt;调用模型—&amp;gt;根据结果派发页面）  二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，spring">
+<meta name="description" content="一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示  jsp，html……） C-Controller 控制器（接收请求—&amp;gt;调用模型—&amp;gt;根据结果派发页面）  二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，springM">
 <meta name="keywords" content="springmvc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringMVC工作原理">
 <meta property="og:url" content="http://yoursite.com/2019/01/18/SpringMVC工作原理/index.html">
 <meta property="og:site_name" content="Hi-Yellow">
-<meta property="og:description" content="一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示  jsp，html……） C-Controller 控制器（接收请求—&amp;gt;调用模型—&amp;gt;根据结果派发页面）  二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，spring">
+<meta property="og:description" content="一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示  jsp，html……） C-Controller 控制器（接收请求—&amp;gt;调用模型—&amp;gt;根据结果派发页面）  二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，springM">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190118124807620.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20190118124848841.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-01-18T04:54:24.856Z">
+<meta property="og:updated_time" content="2019-01-18T04:55:50.847Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC工作原理">
-<meta name="twitter:description" content="一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示  jsp，html……） C-Controller 控制器（接收请求—&amp;gt;调用模型—&amp;gt;根据结果派发页面）  二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，spring">
+<meta name="twitter:description" content="一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示  jsp，html……） C-Controller 控制器（接收请求—&amp;gt;调用模型—&amp;gt;根据结果派发页面）  二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，springM">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190118124807620.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70">
 
 
@@ -415,7 +415,6 @@
 
       
         <hr>
-<hr>
 <h3 id="一、MVC模式"><a href="#一、MVC模式" class="headerlink" title="一、MVC模式"></a>一、MVC模式</h3><h4 id="1-1-MVC的原理图："><a href="#1-1-MVC的原理图：" class="headerlink" title="1.1 MVC的原理图："></a>1.1 MVC的原理图：</h4><p><img src="https://img-blog.csdnimg.cn/20190118124807620.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="mvc"></p>
 <h4 id="1-2-分析："><a href="#1-2-分析：" class="headerlink" title="1.2 分析："></a>1.2 分析：</h4><ul>
 <li>M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity）</li>
