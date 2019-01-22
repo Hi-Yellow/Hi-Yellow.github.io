@@ -126,16 +126,28 @@
   </entry>
   
   <entry>
-    <title></title>
+    <title>远程连接数据库用户权限问题</title>
     <link href="http://yoursite.com/2019/01/16/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2019/01/16/远程连接数据库用户权限问题/</id>
-    <published>2019-01-16T10:30:56.329Z</published>
-    <updated>2019-01-22T13:41:36.923Z</updated>
+    <published>2019-01-16T10:30:56.000Z</published>
+    <updated>2019-01-22T13:41:36.934Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="一、错误描述："><a href="#一、错误描述：" class="headerlink" title="一、错误描述："></a>一、错误描述：</h3><p>远程连接Mysql服务器的数据库，错误代码是1130，<strong>ERROR 1130: Host xxx.xxx.xxx.xxx  is not allowed to connect to this MySQL server</strong>  </p><h3 id="二、解决方案："><a href="#二、解决方案：" class="headerlink" title="二、解决方案："></a>二、解决方案：</h3><p>该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”localhost”改称’%’即可 。 </p><h4 id="2-1-具体解决方案："><a href="#2-1-具体解决方案：" class="headerlink" title="2.1 具体解决方案："></a>2.1 具体解决方案：</h4><p>1、以权限用户root登录；</p><p><code>mysql -u root -p</code>  </p><p>2、选择mysql库 ；</p><p><code>mysql&gt; use mysql;</code> </p><p>3、查看mysql库中的user表的host值（即可进行连接访问的主机/IP名称）；</p><p><code>mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;;</code>  </p><p>4、修改host值（以通配符%的内容增加主机/IP地址），当然也可以直接增加IP地址  </p><p>如果这步出先错误为: <strong>“ERROR 1062 (23000): Duplicate entry ‘%-root’ for key ‘PRIMARY’ “</strong>  由说明该记录有了，跳过这步；</p><p><code>mysql&gt; update user set host = &#39;%&#39; where user =&#39;root&#39;;</code>  </p><p>5、刷新MySQL的系统权限相关表  ；</p><p><code>mysql&gt; flush privileges;</code>  </p><p>6、再重新查看user表时，有修改；</p><p><code>mysql&gt; select &#39;host&#39;   from user where user=&#39;root&#39;;</code>    </p><p>7、重起mysql服务即可完成。 </p><p><code>mysql&gt; net start mysql</code></p>]]></content>
     
     <summary type="html">
     
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;一、错误描述：&quot;&gt;&lt;a href=&quot;#一、错误描述：&quot; class=&quot;headerlink&quot; title=&quot;一、错误描述：&quot;&gt;&lt;/a&gt;一、错误描述：&lt;/h3&gt;&lt;p&gt;远程连接Mysql服务器的数据库，错误代码是1130，&lt;strong&gt;ERROR 1130
+      
+    
     </summary>
     
+      <category term="MySQL" scheme="http://yoursite.com/categories/MySQL/"/>
+    
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
   </entry>
   
@@ -187,11 +199,11 @@
       <category term="项目总结" scheme="http://yoursite.com/categories/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="jsp" scheme="http://yoursite.com/tags/jsp/"/>
     
@@ -295,32 +307,6 @@
   </entry>
   
   <entry>
-    <title>windows常用命令行</title>
-    <link href="http://yoursite.com/2019/01/09/windows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
-    <id>http://yoursite.com/2019/01/09/windows常用命令行/</id>
-    <published>2019-01-09T09:15:25.000Z</published>
-    <updated>2019-01-16T10:28:21.215Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
-      
-    
-    </summary>
-    
-      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
-    
-    
-      <category term="dos" scheme="http://yoursite.com/tags/dos/"/>
-    
-  </entry>
-  
-  <entry>
     <title>java排序算法</title>
     <link href="http://yoursite.com/2019/01/09/java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/01/09/java排序算法/</id>
@@ -343,6 +329,32 @@
     
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows常用命令行</title>
+    <link href="http://yoursite.com/2019/01/09/windows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
+    <id>http://yoursite.com/2019/01/09/windows常用命令行/</id>
+    <published>2019-01-09T09:15:25.000Z</published>
+    <updated>2019-01-16T10:28:21.215Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
+    
+    
+      <category term="dos" scheme="http://yoursite.com/tags/dos/"/>
     
   </entry>
   

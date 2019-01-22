@@ -90,7 +90,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -103,14 +103,18 @@
 
 
 
+<meta name="description" content="一、错误描述：远程连接Mysql服务器的数据库，错误代码是1130，ERROR 1130: Host xxx.xxx.xxx.xxx  is not allowed to connect to this MySQL server   二、解决方案：该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”lo">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hi-Yellow">
+<meta property="og:title" content="远程连接数据库用户权限问题">
 <meta property="og:url" content="http://yoursite.com/2019/01/16/远程连接数据库用户权限问题/index.html">
 <meta property="og:site_name" content="Hi-Yellow">
+<meta property="og:description" content="一、错误描述：远程连接Mysql服务器的数据库，错误代码是1130，ERROR 1130: Host xxx.xxx.xxx.xxx  is not allowed to connect to this MySQL server   二、解决方案：该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”lo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-22T13:41:36.923Z">
+<meta property="og:updated_time" content="2019-01-22T13:41:36.934Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hi-Yellow">
+<meta name="twitter:title" content="远程连接数据库用户权限问题">
+<meta name="twitter:description" content="一、错误描述：远程连接Mysql服务器的数据库，错误代码是1130，ERROR 1130: Host xxx.xxx.xxx.xxx  is not allowed to connect to this MySQL server   二、解决方案：该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”lo">
 
 
 
@@ -146,7 +150,7 @@
 
 
 
-  <title> | Hi-Yellow</title>
+  <title>远程连接数据库用户权限问题 | Hi-Yellow</title>
   
 
 
@@ -335,7 +339,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">远程连接数据库用户权限问题</h1>
         
 
         <div class="post-meta">
@@ -357,6 +361,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -384,7 +410,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  289 字
                 </span>
 				
                 <span class="post-meta-divider">|</span>
@@ -417,7 +443,25 @@
       
 
       
-        
+        <hr>
+<h3 id="一、错误描述："><a href="#一、错误描述：" class="headerlink" title="一、错误描述："></a>一、错误描述：</h3><p>远程连接Mysql服务器的数据库，错误代码是1130，<strong>ERROR 1130: Host xxx.xxx.xxx.xxx  is not allowed to connect to this MySQL server</strong>  </p>
+<h3 id="二、解决方案："><a href="#二、解决方案：" class="headerlink" title="二、解决方案："></a>二、解决方案：</h3><p>该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”localhost”改称’%’即可 。 </p>
+<h4 id="2-1-具体解决方案："><a href="#2-1-具体解决方案：" class="headerlink" title="2.1 具体解决方案："></a>2.1 具体解决方案：</h4><p>1、以权限用户root登录；</p>
+<p><code>mysql -u root -p</code>  </p>
+<p>2、选择mysql库 ；</p>
+<p><code>mysql&gt; use mysql;</code> </p>
+<p>3、查看mysql库中的user表的host值（即可进行连接访问的主机/IP名称）；</p>
+<p><code>mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;;</code>  </p>
+<p>4、修改host值（以通配符%的内容增加主机/IP地址），当然也可以直接增加IP地址  </p>
+<p>如果这步出先错误为: <strong>“ERROR 1062 (23000): Duplicate entry ‘%-root’ for key ‘PRIMARY’ “</strong>  由说明该记录有了，跳过这步；</p>
+<p><code>mysql&gt; update user set host = &#39;%&#39; where user =&#39;root&#39;;</code>  </p>
+<p>5、刷新MySQL的系统权限相关表  ；</p>
+<p><code>mysql&gt; flush privileges;</code>  </p>
+<p>6、再重新查看user表时，有修改；</p>
+<p><code>mysql&gt; select &#39;host&#39;   from user where user=&#39;root&#39;;</code>    </p>
+<p>7、重起mysql服务即可完成。 </p>
+<p><code>mysql&gt; net start mysql</code></p>
+
       
     </div>
     
@@ -478,6 +522,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+        </div>
       
 
       
@@ -587,8 +637,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -616,7 +675,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -627,7 +686,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -691,6 +750,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、错误描述："><span class="nav-number">1.</span> <span class="nav-text">一、错误描述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、解决方案："><span class="nav-number">2.</span> <span class="nav-text">二、解决方案：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-具体解决方案："><span class="nav-number">2.1.</span> <span class="nav-text">2.1 具体解决方案：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -723,7 +798,7 @@
 <span class="post-meta-divider">|</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共13.3k字</span>
+  <span class="post-count">博客全站共13.6k字</span>
 </div>
 <br>
 
