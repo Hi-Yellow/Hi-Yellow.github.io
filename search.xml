@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Tomcat的基本原理]]></title>
+    <url>%2F2019%2F01%2F22%2FTomcat%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%2F</url>
+    <content type="text"><![CDATA[一、Tomcat运行原理分析1、Tomcat是运行在JVM中的一个进程。它定义为【中间件】，即是一个在Java项目与JVM之间的中间容器。 2、Web项目的本质，是一大堆的资源文件和方法。Web项目没有入口方法(main方法)，意味着Web项目中的方法不会自动运行起来。 3、Web项目部署到Tomcat的webapp目录下，目的是希望Tomcat去调用已经写好的方法去为客户端返回需要的资源和数据。 4、Tomcat可以运行起来，并调用写好的方法。那么，Tomcat一定有一个main方法。 5、对于Tomcat而言，它并不知道我们会有什么样的方法，这些都只是在项目被部署到webapp目录下后才确定的。所以，必然用到了Java的反射来实现类的动态加载、实例化、获取方法、调用方法。但是我们部署到Tomcat的中的Web项目必须是按照规定好的接口来进行编写，以便进行调用。 6、Tomcat如何确定调用什么方法呢。这取却于客户端的请求，http://127.0.0.1:8080/ETMS/login.jsp?login这样的一个请求，通过http协议，在浏览器发往本机的8080端口，携带的参数show方法，包含此方法的路径为ETMS，文件名为：login.jsp。 二、Tomcat Server的组成部分2.1 Server A Server element represents the entire Catalina servlet container. (Singleton) 2.2 ServiceService是这样一个集合：它由一个或者多个Connector组成，以及一个Engine，负责处理所有Connector所获得的客户请求。 2.3 Connector 1、一个Connector将在某个指定端口上侦听客户请求，并将获得的请求交给Engine来处理，从Engine处获得回应并返回客户。 2、Tomcat有两个典型的Connector，一个直接侦听来自browser的http请求，一个侦听来自其它WebServer的请求。 Coyote Http/1.1 Connector 在端口8080处侦听来自客户browser的http请求； Coyote JK2 Connector 在端口8009处侦听来自其它WebServer(Apache)的servlet/jsp代理请求。 2.4 Engine Engine下可以配置多个虚拟主机Virtual Host，每个虚拟主机都有一个域名； 当Engine获得一个请求时，它把该请求匹配到某个Host上，然后把该请求交给该Host来处理； Engine有一个默认虚拟主机，当请求无法匹配到任何一个Host上的时候，将交给该默认Host来处理。 2.5 Host 代表一个Virtual Host，虚拟主机，每个虚拟主机和某个网络域名Domain Name相匹配； 每个虚拟主机下都可以部署(deploy)一个或者多个Web App，每个Web App对应于一个Context，有一个Context path。当Host获得一个请求时，将把该请求匹配到某个Context上，然后把该请求交给该Context来处理； 匹配的方法是“最长匹配”，所以一个path==””的Context将成为该Host的默认Context，所有无法和其它Context的路径名匹配的请求都将最终和该默认Context匹配。 2.6 Context 一个Context对应于一个Web Application，一个Web Application由一个或者多个Servlet组成Context在创建的时候将根据配置文件$CATALINA_HOME/conf/web.xml和$WEBAPP_HOME/WEB-INF/web.xml载入Servlet类； 当Context获得请求时，将在自己的映射表(mapping table)中寻找相匹配的Servlet类，如果找到，则执行该类，获得请求的回应，并返回。 2.7 Tomcat Server的结构图 2.8 Tomcat的启动过程 1、Tomcat 先根据/conf/server.xml 下的配置启动Server，再加载Service，对于与Engine相匹配的Host，每个Host 下面都有一个或多个Context。 注意：Context 既可配置在server.xml 下，也可配置成一单独的文件，放在conf\Catalina\localhost 下，简称应用配置文件。 2、Web Application 对应一个Context，每个Web Application 由一个或多个Servlet 组成。当一个Web Application 被初始化的时候，它将用自己的ClassLoader 对象载入部署配置文件web.xml 中定义的每个Servlet 类：它首先载入在$CATALINA_HOME/conf/web.xml中部署的Servlet 类，然后载入在自己的Web Application 根目录下WEB-INF/web.xml 中部署的Servlet 类。 3、web.xml 文件有两部分：Servlet 类定义和Servlet 映射定义。 每个被载入的Servlet 类都有一个名字，且被填入该Context 的映射表(mapping table)中，和某种URL 路径对应。当该Context 获得请求时，将查询mapping table，找到被请求的Servlet，并执行以获得请求响应。 三、Tomcat Server处理一个http请求的过程假设来自客户的请求为：http://localhost:8080/wsota/wsota_index.jsp 1) 请求被发送到本机端口8080，被在那里侦听的Coyote HTTP/1.1 Connector获得；2) Connector把该请求交给它所在的Service的Engine来处理，并等待来自Engine的回应；3) Engine获得请求localhost/wsota/wsota_index.jsp，匹配它所拥有的所有虚拟主机Host；4) Engine匹配到名为localhost的Host（即使匹配不到也把请求交给该Host处理，因为该Host被定义为该Engine的默认主机）；5) localhost Host获得请求/wsota/wsota_index.jsp，匹配它所拥有的所有Context；6) Host匹配到路径为/wsota的Context（如果匹配不到就把该请求交给路径名为””的Context去处理）；7) path=”/wsota”的Context获得请求/wsota_index.jsp，在它的mapping table中寻找对应的servlet；8) Context匹配到URL PATTERN为*.jsp的servlet，对应于JspServlet类；9) 构造HttpServletRequest对象和HttpServletResponse对象，作为参数调用JspServlet的doGet或doPost方法；10) Context把执行完了之后的HttpServletResponse对象返回给Host；11) Host把HttpServletResponse对象返回给Engine；12) Engine把HttpServletResponse对象返回给Connector；13) Connector把HttpServletResponse对象返回给客户browser。 四、Tomcat原理总结1、Tomcat需要main方法启动。 2、Tomcat需要监听本机上的某个端口。 3、Tomcat需要获取此端口上来自客户端的链接并获得请求调用的方法与参数。 4、Tomcat需要根据请求调用的方法，动态地加载方法所在的类，完成累的实例化并通过该实例获得需要的方法最终将请求传入方法执行。 5、将结果返回给客户端（jsp/html页面、json/xml字符串）。]]></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>tomcat</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[@Autowired和@Resource的区别]]></title>
+    <url>%2F2019%2F01%2F22%2F%40Autowired%E5%92%8C%40Resource%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[@Resource和@Autowired都是做bean的注入时使用，其实@Resource并不是Spring的注解，它的包是javax.annotation.Resource，需要导入，但是Spring支持该注解的注入。 一、共同点两者都可以写在字段和setter方法上。两者如果都写在字段上，那么就不需要再写setter方法。 二、不同点2.1 @Autowired1、@Autowired为Spring提供的注解，需要导入包org.springframework.beans.factory.annotation.Autowired，只按照byType注入。 12345678910public class TestServiceImpl &#123; // 下面两种@Autowired只要使用一种即可 @Autowired private UserDao userDao; // 用于字段上 @Autowired public void setUserDao(UserDao userDao) &#123; // 用于属性的方法上 this.userDao = userDao; &#125;&#125; 2、@Autowired注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，可以结合@Qualifier注解一起使用。如下： 12345public class TestServiceImpl &#123; @Autowired @Qualifier(&quot;userDao&quot;) private UserDao userDao; &#125; 2.2 @Resource1、@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。 12345678910public class TestServiceImpl &#123; // 下面两种@Resource只要使用一种即可 @Resource(name=&quot;userDao&quot;) private UserDao userDao; // 用于字段上 @Resource(name=&quot;userDao&quot;) public void setUserDao(UserDao userDao) &#123; // 用于属性的setter方法上 this.userDao = userDao; &#125;&#125; 2、@Resource的作用相当于@Autowired，只不过@Autowired按byType自动注入，而@Resource默认按 byName自动注入。@Resource有两个重要的属性，分别是name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。 3、@Resource装配顺序 如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常； 如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常； 如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常； 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配。]]></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>springmvc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Filter和Interceptor区别]]></title>
+    <url>%2F2019%2F01%2F18%2FFilter%E5%92%8CInterceptor%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[一、过滤器（Filter）1.1 作用： 在Javaweb中，对传入的request、response提前过滤掉一些信息，或者提前设置一些参数，然后再传入servlet或者Controller进行业务逻辑操作； 在过滤器中修改字符编码（CharacterEncodingFilter）； 在过滤器中修改HttpServletRequest的一些参数（XSSFilter(自定义过滤器)），如：过滤低俗文字、危险字符等。 1.2 特点： 依赖于servlet容器，在实现上，基于函数回调； 可以对几乎所有请求进行过滤； 过滤器实例只在初始化的时候调用一次。由web应用启动而启动的，只初始化一次，以后就可以拦截相关请求，只有当你的web应用停止或重新部署的时候才销毁。 1.3 在web.xml配置1234567891011121314151617&lt;filter&gt; &lt;filter-name&gt;encoding&lt;/filter-name&gt; &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt; &lt;init-param&gt; &lt;param-name&gt;encoding&lt;/param-name&gt; &lt;param-value&gt;UTF-8&lt;/param-value&gt; &lt;/init-param&gt; &lt;init-param&gt; &lt;param-name&gt;forceEncoding&lt;/param-name&gt; &lt;param-value&gt;true&lt;/param-value&gt; &lt;/init-param&gt;&lt;/filter&gt;&lt;filter-mapping&gt; &lt;filter-name&gt;encoding&lt;/filter-name&gt; &lt;servlet-name&gt;/*&lt;/servlet-name&gt;&lt;/filter-mapping&gt; 1.4 通过实现Filter接口实现1、Servlet 的 Filter 接口需要实现如下方法： void init(FilterConfig paramFilterConfig) – 当容器初始化 Filter 时调用，该方法在 Filter 的生命周期只会被调用一次，一般在该方法中初始化一些资源，FilterConfig 是容器提供给 Filter 的初始化参数，在该方法中可以抛出 ServletException 。init 方法必须执行成功，否则 Filter 可能不起作用，出现以下两种情况时，web 容器中 Filter 可能无效： 1）抛出 ServletException 2）超过 web 容器定义的执行时间。 doFilter(ServletRequest request, ServletResponse response, FilterChain chain) – Web 容器每一次请求都会调用该方法。该方法将容器的请求和响应作为参数传递进来， FilterChain 用来调用下一个 Filter。 void destroy() – 当容器销毁 Filter 实例时调用该方法，可以在方法中销毁资源，该方法在 Filter 的生命周期只会被调用一次。 2、代码实现： 12345678910111213141516171819202122public class TestFilter implements Filter &#123; @Override public void destroy() &#123; System.out.println(&quot;filter destroy&quot;); &#125; @Override public void doFilter(ServletRequest request,ServletResponse response,FilterChain chain) throws IOException, ServletException &#123; System.out.println(&quot;filter doFilter before&quot;); chain.doFilter(request, response); System.out.println(&quot;filter doFilter after&quot;); &#125; @Override public void init(FilterConfig config) throws ServletException &#123; System.out.println(&quot;filter init&quot;); &#125; &#125; 二、拦截器（Interceptor）2.1 作用： 拦截用户请求，进行处理。比如判断用户登录情况，权限验证。 2.2 特点： 基于java的反射机制； 通过HandlerInterceptor接口或者继承HandlerInterceptorAdapter实现； 一个拦截器实例在一个controller生命周期之内可以多次调用； 属于面向切面编程（AOP）的一种运用，就是在service或者一个方法前，调用一个方法，或者在方法后，调用一个方法，比如动态代理就是拦截器的简单实现，在调用方法前打印出字符串（或者做其它业务逻辑的操作），也可以在调用方法后打印出字符串，甚至在抛出异常的时候做业务逻辑的操作； 只能对controller请求进行拦截，对一些静态资源无法拦截； 拦截器将很多功能从我们的Action中独立出来，大量减少了我们Action的代码，独立出来的行为就有很好的重用性。 2.3 在web.xml配置12345678910&lt;mvc:interceptors&gt; &lt;mvc:interceptor&gt; &lt;mvc:mapping path=&quot;/**&quot; /&gt; &lt;bean class=&quot;com.scorpios.atcrowdfunding.web.LoginInterceptor&quot;&gt;&lt;/bean&gt; &lt;/mvc:interceptor&gt; &lt;mvc:interceptor&gt; &lt;mvc:mapping path=&quot;/**&quot; /&gt; &lt;bean class=&quot;com.scorpios.atcrowdfunding.web.AuthInterceptor&quot;&gt;&lt;/bean&gt; &lt;/mvc:interceptor&gt;&lt;/mvc:interceptors&gt; 2.4 通过实现HandlerInterceptor接口1、Spring 中主要通过 HandlerInterceptor 接口来实现请求的拦截，实现 HandlerInterceptor 接口需要实现下面三个方法： preHandle是在请求到达Controller之前实现，可进行用户校验登录等操作，返回true后，请求到达Controller层； postHandle方法是在执行完Controller层代码之后，DispatcherServlet进行视图的渲染之前执行，因此可以对ModelAndView 对象进行处理； afterCompletion方法是在DispatcherServlet进行视图的渲染之后执行调用，主要是进行一些资源清理等工作。 2、代码实现： 123456789101112131415161718public class TestInterceptor implements HandlerInterceptor &#123; @Override public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception &#123; System.out.println(&quot;preHandle&quot;); return true; &#125; @Override public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception &#123; System.out.println(&quot;postHandle&quot;); &#125; @Override public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception &#123; System.out.println(&quot;afterCompletion&quot;); &#125;&#125; 三、 拦截器（Interceptor）和过滤器（Filter）的区别3.1 Filter和Interceptor的区别 Filter是基于函数回调（doFilter()方法）的，而Interceptor则是基于Java反射的（AOP思想）。 Filter依赖于Servlet容器，而Interceptor不依赖于Servlet容器。 Filter对几乎所有的请求起作用，而Interceptor只能对action请求起作用。 Interceptor可以访问Action的上下文，值栈里的对象，而Filter不能。 在action的生命周期里，Interceptor可以被多次调用，而Filter只能在容器初始化时调用一次。 3.2 拦截器和过滤器执行顺序1、Filter.init();2、Filter.doFilter(); before doFilter3、HandlerInterceptor.preHandle();4、Controller方法执行5、HandlerInterceptor.postHandle();6、DispatcherServlet视图渲染7、HandlerInterceptor.afterCompletion();8、Filter.doFilter(); after doFilter9、Filter.destroy();]]></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>springmvc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SpringMVC工作原理]]></title>
+    <url>%2F2019%2F01%2F18%2FSpringMVC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%2F</url>
+    <content type="text"><![CDATA[一、MVC模式1.1 MVC的原理图： 1.2 分析： M-Model 模型（完成业务逻辑：有javaBean构成，service+dao+entity） V-View 视图（做界面的展示 jsp，html……） C-Controller 控制器（接收请求—&gt;调用模型—&gt;根据结果派发页面） 二、SpringMVC2.1 简介springMVC是一个MVC的开源框架，springMVC=struts2+spring，springMVC就相当于是Struts2加上sring的整合。springMVC是spring的一个后续产品，其实就是spring在原有基础上，又提供了web应用的MVC模块，可以简单的把springMVC理解为是spring的一个模块（类似AOP，IOC这样的模块），网络上经常会说springMVC和spring无缝集成，其实springMVC就是spring的一个子模块，所以根本不需要同spring进行整合。 2.2 SpringMVC的原理图： 2.3 SpringMVC流程(1) 用户发送请求至前端控制器DispatcherServlet； (2) DispatcherServlet收到请求调用HandlerMapping处理器映射器； (3) 处理器映射器找到具体的处理器(可以根据xml配置、注解进行查找)，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet； (4) DispatcherServlet调用HandlerAdapter处理器适配器； (5) HandlerAdapter经过适配调用具体的处理器(Controller，也叫后端控制器)； (6) Controller执行完成返回ModelAndView； (7) HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet； (8) DispatcherServlet将ModelAndView传给ViewReslover视图解析器； (9) ViewReslover解析后返回具体View； (10) DispatcherServlet根据View进行渲染视图（即将模型数据填充至视图中）； (11) DispatcherServlet响应用户。 2.4 组件说明：(1) 前端控制器DispatcherServlet（不需要工程师开发）,由框架提供 作用：接收请求，响应结果，相当于转发器，中央处理器。有了dispatcherServlet减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，dispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请求，dispatcherServlet的存在降低了组件之间的耦合性。 (2)处理器映射器HandlerMapping(不需要工程师开发),由框架提供 作用：根据请求的url查找Handler。HandlerMapping负责根据用户请求找到Handler即处理器，springmvc提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等。 (3)处理器适配器HandlerAdapter 作用：按照特定规则（HandlerAdapter要求的规则）去执行Handler。通过HandlerAdapter对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理器进行执行。 (4) 处理器Handler(需要工程师开发) 注意：编写Handler时按照HandlerAdapter的要求去做，这样适配器才可以去正确执行Handler作用：Handler 是继DispatcherServlet前端控制器的后端控制器，在DispatcherServlet的控制下Handler对具体的用户请求进行处理。由于Handler涉及到具体的用户业务请求，所以一般情况需要工程师根据业务需求开发Handler。 (5) 视图解析器View resolver(不需要工程师开发),由框架提供作用：进行视图解析，根据逻辑视图名解析成真正的视图（view）。 View Resolver负责将处理结果生成View视图，View Resolver首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成View视图对象，最后对View进行渲染将处理结果通过页面展示给用户。 springmvc框架提供了很多的View视图类型，包括：jstlView、freemarkerView、pdfView等。一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由工程师根据业务需求开发具体的页面。 (6) 视图View(需要工程师开发jsp…) View是一个接口，实现类支持不同的View类型（jsp、freemarker、pdf…） 2.4.1 核心架构的具体流程步骤如下：(1) 首先用户发送请求——&gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一访问点，进行全局的流程控制；(2) DispatcherServlet——&gt;HandlerMapping， HandlerMapping 将会把请求映射为HandlerExecutionChain 对象（包含一个Handler 处理器（页面控制器）对象、多个HandlerInterceptor 拦截器）对象，通过这种策略模式，很容易添加新的映射策略；(3) DispatcherServlet——&gt;HandlerAdapter，HandlerAdapter 将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器；(4) HandlerAdapter——&gt;处理器功能处理方法的调用，HandlerAdapter 将会根据适配的结果调用真正的处理器的功能处理方法，完成功能处理；并返回一个ModelAndView 对象（包含模型数据、逻辑视图名）；(5) ModelAndView的逻辑视图名——&gt; ViewResolver， ViewResolver 将把逻辑视图名解析为具体的View，通过这种策略模式，很容易更换其他视图技术；(6) View——&gt;渲染，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构，因此很容易支持其他视图技术；(7)返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。 2.4.2 下边两个组件通常情况下需要开发： Handler：处理器，即后端控制器用controller表示。 View：视图，即展示给用户的界面，视图中通常需要标签语言展示模型数据。]]></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>springmvc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[远程连接数据库用户权限问题]]></title>
+    <url>%2F2019%2F01%2F16%2F%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[一、错误描述：远程连接Mysql服务器的数据库，错误代码是1130，ERROR 1130: Host xxx.xxx.xxx.xxx is not allowed to connect to this MySQL server 二、解决方案：该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”localhost”改称’%’即可 。 2.1 具体解决方案：1、以权限用户root登录； mysql -u root -p 2、选择mysql库 ； mysql&gt; use mysql; 3、查看mysql库中的user表的host值（即可进行连接访问的主机/IP名称）； mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;; 4、修改host值（以通配符%的内容增加主机/IP地址），当然也可以直接增加IP地址 如果这步出先错误为: “ERROR 1062 (23000): Duplicate entry ‘%-root’ for key ‘PRIMARY’ “ 由说明该记录有了，跳过这步； mysql&gt; update user set host = &#39;%&#39; where user =&#39;root&#39;; 5、刷新MySQL的系统权限相关表 ； mysql&gt; flush privileges; 6、再重新查看user表时，有修改； mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;; 7、重起mysql服务即可完成。 mysql&gt; net start mysql]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis安装]]></title>
+    <url>%2F2019%2F01%2F16%2FRedis%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[一、Redis安装步骤：1、运行：redis-server.exe redis.windows.conf； 2、另启一个cmd窗口，原来的不要关闭，不然就无法访问服务端了， 切换到redis目录下运行 redis-cli.exe -h 127.0.0.1 -p 6379； 3、设置键值对 set myKey abc； 4、取出键值对 get myKey ； 二、设置Redis服务命令：1、redis-server --service-install redis.windows-service.conf --loglevel verbose]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[传能光纤链路状态检测系统]]></title>
+    <url>%2F2019%2F01%2F16%2F%E4%BC%A0%E8%83%BD%E5%85%89%E7%BA%A4%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F%2F</url>
+    <content type="text"><![CDATA[一、javaweb知识点总结1.1 常见的java调用python脚本两种方式 通过jython.jar提供的类库实现 通过Runtime.getRuntime()开启进程来执行脚本文件 1.2 java调用python程序实现web服务功能使用Runtime.getRuntime()执行脚本文件，这种方式和cmd中使用python+文件名的命令调用python程序相同。 1、配置文件resource.properties 2、工具类TestUtils 123456789101112131415161718192021222324252627public class TestUtils &#123; public static int JavaTransferPython(String PythonPath,String FilePath) &#123; final String PYTHON_PATH = PythonPath; //python.exe可执行文件的存放路径 final String FILE_PATH = FilePath; //test.py程序的存放路径 String result=&quot;&quot;; Process proc; try &#123; String [] cmd =new String []&#123;PYTHON_PATH,FILE_PATH&#125;; proc = Runtime.getRuntime().exec(cmd);// 执行py文件 //用输入输出流来截取结果 BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream())); String line = null; while ((line = in.readLine()) != null) &#123; System.out.println(line); &#125; in.close(); proc.waitFor(); //在此需要注意的一点，java代码中的proc.waitFor()值为0表示我们调用python脚本成功，返回值为1表示调用python脚本失败，这和我们通常意义上见到的0与1定义正好相反。 return 1; //因为web工程是请求-响应式的，只有请求而无响应，会报400错误。此处请求成功，返回1。 &#125; catch (IOException e) &#123; e.printStackTrace(); return 0; //请求失败，返回0。 &#125; catch (InterruptedException e) &#123; e.printStackTrace(); return 0; //请求失败，返回0。 &#125; &#125;&#125; 3、service层中定义方法名 public int JavaTransferPythonTest(); 4、serviceImpl实现类中实现该方法 123456789@Value(&quot;$&#123;PYTHON_PATH&#125;&quot;)private String PYTHON_PATH;@Value(&quot;$&#123;FILE_PATH&#125;&quot;)private String FILE_PATH;@Overridepublic int JavaTransferPythonTest() &#123; return TestUtils.JavaTransferPython(PYTHON_PATH,FILE_PATH); &#125; 5、action层 12345@RequestMapping(&quot;/javaTransferPythonTest&quot;)@ResponseBodypublic int JavaTransferPythonTest() &#123; return fiberLossService.JavaTransferPythonTest();&#125; 6、jsp渲染 123456789101112131415161718&#123;text:&apos;&lt;font size=&quot;4&quot; face=&quot;arial&quot; color=&quot;red&quot;&gt;&lt;b&gt;执行程序&lt;/b&gt;&lt;/font&gt;&apos;,handler: function()&#123; $.ajax(&#123; url: &quot;###/javaTransferPythonTest.action&quot;, type:&quot;POST&quot;, traditional:true, //设置为传统方式传送参数 success: function(html)&#123; if(html&gt;0)&#123; alert(&quot;恭喜您 ，操作成功，请到执行结果界面查看详细信息！&quot;); $(&quot;#dg&quot;).datagrid(&quot;reload&quot;); //重新刷新页面 &#125;else&#123; alert(&quot;对不起 ，操作失败！&quot;); &#125; &#125; &#125;);&#125; &#125; 7、jsp搜索功能 1234567891011121314151617$(&apos;#ss&apos;).searchbox(&#123; searcher:function(value,name)&#123; if(name==&apos;Id&apos;)&#123; $(&apos;#dg&apos;).datagrid(&apos;load&apos;,&#123; Id:value //&apos;%&apos;+value+&apos;%&apos;对应数据库字段为String类型,value对应数据库字段为int类型 &#125;); &#125; if(name==&apos;name&apos;)&#123; $(&apos;#dg&apos;).datagrid(&apos;load&apos;,&#123; name:value //&apos;%&apos;+value+&apos;%&apos;对应数据库字段为String类型,value对应数据库字段为int类型 &#125;); &#125; &#125;, width:250, menu:&apos;#mm&apos;, prompt:&apos;请输入搜索内容&apos; &#125;); 8、Mapper.xml 1234567&lt;select id=&quot;selectPageListUseDyc&quot; parameterType=&quot;page&quot; resultMap=&quot;###&quot; &gt; SELECT * ### &lt;where&gt; &lt;if test=&quot;paramEntity.index!=null&quot;&gt;and `index` = #&#123;paramEntity.index&#125;&lt;/if&gt; &lt;!-- 字段index和数据库的index关键字同名，故改为`index`。index字段若为int型，可以用 = 或者like；若为String型，用like--&gt; &lt;/where&gt; limit #&#123;start&#125;,#&#123;rows&#125;&lt;/select&gt; 9、SQLyog 导出数据库 注意：导出数据库是应该按图中标记所设置，以便重新导入该数据库时，无法导入！！！ 10、Tomcat做图片服务器 Tomcat作为项目服务器时因为权限问题，只能访问Tomcat文件夹下的资源。但是实际工作中如果把所有图片文件都保存在tomcat下，不利于后续工作进行。所以可以在server.xml中加入如下配置，即可访问指定的文件。 Tomcat 7.0\conf\server.xml 找到Host标签加入如下内容： 1&lt;Context docBase = &quot;D://objimgs//upload&quot; path = &quot;objimgs&quot;/&gt; path为访问名称，docBase为目标文件夹路径。所以 “http://127.0.0.1:8080/objimgs/test.jpg“ 即相当于访问服务器 “D://objimgs//upload/test.jpg” 文件。 效果如下： 2.1 python拼接图片1234567891011121314151617181920212223import PIL.Image as Imageimport os#定义图像拼接函数def image_compose(): to_image = Image.new(&apos;RGB&apos;, (IMAGE_COLUMN * IMAGE_SIZE, IMAGE_ROW * IMAGE_SIZE)) # 创建一个新图循环遍历，把每张图片按顺序粘贴到对应位置上 for y in range(1, IMAGE_ROW + 1): for x in range(1, IMAGE_COLUMN + 1): from_image = Image.open(IMAGES_PATH + image_names[IMAGE_COLUMN * (y - 1) + x - 1]).resize( (IMAGE_SIZE, IMAGE_SIZE), Image.ANTIALIAS) to_image.paste(from_image, ((x - 1) * IMAGE_SIZE, (y - 1) * IMAGE_SIZE)) return to_image.save(IMAGE_SAVE_PATH) # 保存新图IMAGES_PATH = &apos;###&apos; # 图片集地址IMAGES_FORMAT = [ &apos;.png&apos;] # 图片格式IMAGE_SIZE = 600 # 每张小图片的大小 600=1200 * 600IMAGE_ROW = 1 # 图片间隔，也就是合并成一张图后，一共有几行IMAGE_COLUMN = 2 # 图片间隔，也就是合并成一张图后，一共有几列IMAGE_SAVE_PATH = &apos;###&apos; # 图片转换后的地址# 获取图片集地址下的所有图片名称image_names = [name for name in os.listdir(IMAGES_PATH) for item in IMAGES_FORMAT if os.path.splitext(name)[1] == item]image_compose() # 调用函数 2.2 python程序导入第三方库或模块 通过快捷键Alt+Enter或者Ctrl+两次空格； 可以通过命令行——python file.py 来运行python程序，dos界面会提示却少的第三方库或模块，然后通过——pip install 模块名 命令来安装所需要的第三方库或模块。]]></content>
+      <categories>
+        <category>项目总结</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>mysql</tag>
+        <tag>java</tag>
+        <tag>jsp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java垃圾回收机制]]></title>
+    <url>%2F2019%2F01%2F10%2Fjava%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>Java面经</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[MySQL中的索引]]></title>
+    <url>%2F2019%2F01%2F10%2FMySQL%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95%2F</url>
+    <content type="text"><![CDATA[一、索引1.1 什么是索引？索引用于快速找出在某个列中有一特定值的行，不使用索引，MySQL必须从第一条记录开始读完整个表，直到找出相关的行，表越大，查询数据所花费的时间就越多，如果表中查询的列有一个索引，MySQL能够快速到达一个位置去搜索数据文件，而不必查看所有数据，那么将会节省很大一部分时间。 1.2 为什么要建立索引？如果没有索引，那么将从表中第一条记录一条条往下遍历，直到找到该条信息为止。其中MySQL中的索引的存储类型有两种：BTREE、HASH。 也就是用树或者Hash值来存储该字段，就需要会算法的知识了。我们现在只需要知道索引的作用，功能是什么就行。 二、MySQL中索引的优点和缺点和使用原则2.1 优点： 所有的MySql列类型(字段类型)都可以被索引，也就是可以给任意字段设置索引； 大大加快数据的查询速度。 2.2 缺点： 创建索引和维护索引要耗费时间，并且随着数据量的增加所耗费的时间也会增加； 索引也需要占空间，我们知道数据表中的数据也会有最大上线设置的，如果我们有大量的索引，索引文件可能会比数据文件更快达到上线值； 当对表中的数据进行增加、删除、修改时，索引也需要动态的维护，降低了数据的维护速度。 2.3 使用原则：通过上面说的优点和缺点，我们应该可以知道，并不是每个字段度设置索引就好，也不是索引越多越好，而是需要自己合理的使用。 对经常更新的表就避免对其进行过多的索引，对经常用于查询的字段应该创建索引； 数据量小的表最好不要使用索引，因为由于数据较少，可能查询全部数据花费的时间比遍历索引的时间还要短，索引就可能不会产生优化效果； 在一同值少的列上(字段上)不要建立索引，比如在学生表的”性别”字段上只有男，女两个不同值。相反的，在一个字段上不同值较多可是建立索引。 三、索引的分类注意：索引是在存储引擎中实现的，也就是说不同的存储引擎，会使用不同的索引。 MyISAM和InnoDB存储引擎：只支持BTREE索引， 也就是说默认使用BTREE，不能够更换； MEMORY/HEAP存储引擎：支持HASH和BTREE索引。 3.1 索引类别单列索引(普通索引，唯一索引，主键索引)、组合索引、全文索引、空间索引、 3.1.1 单列索引一个索引只包含单个列，但一个表中可以有多个单列索引。 这里不要搞混淆了。 普通索引：MySQL中基本索引类型，没有什么限制，允许在定义索引的列中插入重复值和空值，纯粹为了查询数据更快一点。 唯一索引：索引列中的值必须是唯一的，但是允许为空值。 主键索引：一种特殊的唯一索引，不允许有空值。 3.1.2 组合索引在表中的多个字段组合上创建的索引，只有在查询条件中使用了这些字段的左边字段时，索引才会被使用，使用组合索引时遵循最左前缀集合。这个如果还不明白，等后面举例讲解时在细说 3.1.3 全文索引全文索引，只有在MyISAM引擎上才能使用，只能在CHAR,VARCHAR,TEXT类型字段上使用全文索引，介绍了要求，说说什么是全文索引，就是在一堆文字中，通过其中的某个关键字等，就能找到该字段所属的记录行，比如有”你是个大煞笔，二货 …” 通过大煞笔，可能就可以找到该条记录。这里说的是可能，因为全文索引的使用涉及了很多细节，我们只需要知道这个大概意思，如果感兴趣进一步深入使用它，那么看下面测试该索引时，会给出一个博文，供大家参考。 3.1.4 空间索引 空间索引是对空间数据类型的字段建立的索引，MySQL中的空间数据类型有四种，GEOMETRY、POINT、LINESTRING、POLYGON。 在创建空间索引时，使用SPATIAL关键字。 要求，引擎为MyISAM，创建空间索引的列，必须将其声明为NOT NULL。]]></content>
+      <categories>
+        <category>Java面经</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux进程间通信（IPC）]]></title>
+    <url>%2F2019%2F01%2F09%2FLinux%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%88IPC%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[一、进程间通信概述1.1 进程通信目的：1.1.1 传输数据：一个进程须要将它的数据发送给还有一个进程。发送的数据量在一个字节到几M字节之间 1.1.2 共享数据多个进程想要操作共享数据。一个进程对共享数据的改动，别的进程应该立马看到。 1.1.3 通知事件一个进程须要向还有一个或一组进程发送消息。通知它（它们）发生了某种事件（如进程终止时要通知父进程）。 1.1.4 资源共享多个进程之间共享相同的资源。为了作到这一点，须要内核提供锁和同步机制。 1.1.5 进程控制有些进程希望全然控制还有一个进程的运行（如Debug进程）。此时控制进程希望可以拦截还有一个进程的全部陷入和异常。并可以及时知道它的状态改变。 1.2 本地的进程间通信（IPC）4种方式A、消息传递（管道、FIFO、消息队列）B、同步（相互排斥量、条件变量、读写锁、文件和写记录锁、信号量）C、共享内存（匿名的和具名的）D、远程过程调用（Solaris门和Sun RPC） 二、linux下进程间通信的几种主要手段2.1 管道（Pipe）及有名管道（named pipe）管道可用于具有亲缘关系进程间的通信，有名管道克服了管道没有名字的限制。因此。除具有管道所具有的功能外，它还同意无亲缘关系进程间的通信； 2.2 信号（Signal）信号是比較复杂的通信方式。用于通知接受进程有某种事件发生，除了用于进程间通信外，进程还可以发送信号给进程本身；linux除了支持Unix早期信号语义函数sigal外，还支持语义符合Posix.1标准的信号函数sigaction（实际上。该函数是基于BSD的，BSD为了实现可靠信号机制，又可以统一对外接口，用sigaction函数又一次实现了signal函数）。 2.3 消息（Message）队列消息队列是消息的链接表，包含Posix消息队列system V消息队列。有足够权限的进程能够向队列中加入消息。被赋予读权限的进程则能够读走队列中的消息。消息队列克服了信号承载信息量少，管道仅仅能承载无格式字节流以及缓冲区大小受限等缺点。 2.4 共享内存使得多个进程能够訪问同一块内存空间，是最快的可用IPC形式。是针对其他通信机制执行效率较低而设计的。往往与其他通信机制，如信号量结合使用，来达到进程间的同步及相互排斥。 2.5 信号量（semaphore）主要作为进程间以及同一进程不同线程之间的同步手段。 2.6 套接口（Socket）更为一般的进程间通信机制，可用于不同机器之间的进程间通信。起初是由Unix系统的BSD分支开发出来的，但如今一般能够移植到其他类Unix系统上：Linux和System V的变种都支持套接字。 注： Linux进程间通信 管道、信号、信号量、消息队列、共享内存、套接字(socket) Linux线程间通信相互排斥量（mutex），信号量。条件变量 Windows进程间通信管道、消息队列、共享内存、信号量 （semaphore） 、套接字(socket) Windows线程间通信相互排斥量（mutex），信号量（semaphore）、临界区（critical section）、事件（event） [相关博文]: linux进程间通信(IPC)机制总结 linux基础——linux进程间通信（IPC）机制总结 Linux进程间通信 IPC机制]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux常用命令大全]]></title>
+    <url>%2F2019%2F01%2F09%2Flinux%2F</url>
+    <content type="text"><![CDATA[一、序言本文总结了windows系统下git面板操作的常用命令，仅供参考学习。如果需要了解更多，请自行百科。 二、常用Linux指令2.1 cd命令：$ cd [path] //path为路径名称，这只是常规语法 2.1.1 详细用法如下：$ cd /d //进入d盘$ cd d: //进入d盘$ cd D: //进入d盘$ cd /D //进入d盘$ cd .. //返回上一级目录$ cd ../ //返回上一级目录$ cd ../../ //返回上两级目录$ cd . //切换到当前目录，通常没有任何反应$ cd ./ //切换到当前目录，通常没有任何反应$ cd //不要以为看错了，确实就只有一个“cd”，它表示切换到个人主目录（类似于切换到window的桌面，但又不是桌面）$ cd - //返回上次访问目录（即倒退到上一次目录位置）$ cd /d/loushengyue/study //进入d盘中的loushengyue目录下的study目录 2.2 ls命令：$ ls //查看当前目录中的文件夹及文件$ ls -l //查看当前目录下的文件和文件夹的详细资料$ ls -a //查看当前目录中的文件夹及文件(包括隐藏文件）$ ls -la //查看当前目录下的文件和文件夹的详细资料(包括隐藏文件） 2.3 pwd命令：$ pwd //显示当前目录路径 2.4 rm命令：$ rm test.js -rf //删除当前目录下的 test.js 文件$ rm ./test.html -rf //删除当前目录下的 test.html 文件$ rm ../test.css -rf //删除上一级目录下的 test.css 文件$ rm test/ -rf //删除当前目录下的 test 文件夹$ rm tst/tt.js -rf //删除 tst 目录下的 tt.js 文件 2.5 mkdir命令：$ mkdir ./test //在当前目录下创建 test 文件夹$ mkdir ../test //在上一级目录下创建 test 文件夹$ mkdir ./test/son //在当前目录下的 test 目录下创建 son 文件夹$ mkdir ./tst1 ./tst2 //在当前目录下创建 tst1 和 tst2 文件夹 2.6 mv命令：$ mv dir new_dir //当前目录下没有 new_dir 时表示将 dir 移动到当前目录下并重命名为 new_dir, 当前目录下有 new_dir 文件夹是表示将 dir 移动到 new_dir 目录中 2.7 cp命令：$ cp test.js newtest.js //复制当前目录下的 test.js 到当前目录下并命名为 newtest.js$ cp ../test.html ./ //复制上一级目录下的 test.html 到当前目录下（注意这里是./，没有重命名） 2.8 touch命令：$ touch ./test.js //在当前目录下创建一个名为 test.js 的文件 [相关博文]: Linux常用命令大全 linux常用命令大全 Linux 常用命令大全 linux命令大全 Linux常用命令大全（非常全！！！） 这些Linux命令，让你的工作事半功倍！]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[乐观锁和悲观锁]]></title>
+    <url>%2F2019%2F01%2F09%2F%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>Java面经</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LOF离群点检测]]></title>
+    <url>%2F2019%2F01%2F09%2FLOF%E7%A6%BB%E7%BE%A4%E7%82%B9%E6%A3%80%E6%B5%8B%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[spring]]></title>
+    <url>%2F2019%2F01%2F09%2Fspring%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mybatis]]></title>
+    <url>%2F2019%2F01%2F09%2Fmybatis%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>SSM</category>
+      </categories>
+      <tags>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[java排序算法]]></title>
+    <url>%2F2019%2F01%2F09%2Fjava%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[一、冒泡排序1.1 快速排序的基本思想：冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。 1.2 冒泡排序的示例： 1.3 冒泡排序的算法实现如下:【排序后，数组从小到大排列】123456789101112131415161718192021/** * 比较相邻的元素。如果第一个比第二个大，就交换他们两个。 * 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。 * 针对所有的元素重复以上的步骤，除了最后一个。 * 持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。 * @param numbers 需要排序的整型数组*/public static void bubbleSort(int[] numbers) &#123; int temp = 0; int size = numbers.length; for(int i = 0 ; i &lt; size-1; i ++) &#123; for(int j = 0 ;j &lt; size-1-i ; j++) &#123; if(numbers[j] &gt; numbers[j+1]) &#123; //交换两数位置 temp = numbers[j]; numbers[j] = numbers[j+1]; numbers[j+1] = temp; &#125; &#125; &#125;&#125; 二、快速排序2.1 快速排序的基本思想：通过一趟排序将待排序记录分割成独立的两部分，其中一部分记录的关键字均比另一部分关键字小，则分别对这两部分继续进行排序，直到整个序列有序。 2.2 快速排序的示例：2.2.1 一趟排序的过程： 2.2.2 排序的全过程： 把整个序列看做一个数组，把第零个位置看做中轴，和最后一个比，如果比它小交换，比它大不做任何处理；交换了以后再和小的那端比，比它小不交换，比他大交换。这样循环往复，一趟排序完成，左边就是比中轴小的，右边就是比中轴大的，然后再用分治法，分别对这两个独立的数组进行排序。 2.3 代码实现如下：2.3.1 查找中轴（最低位作为中轴）所在位置：12345678910111213141516171819202122/** * 查找出中轴（默认是最低位low）的在numbers数组排序后所在位置 * @param numbers 待查找数组 * @param low 开始位置 * @param high 结束位置 * @return 中轴所在位置*/public static int getMiddle(int[] numbers, int low,int high) &#123; int temp = numbers[low]; //数组的第一个作为中轴 while(low &lt; high) &#123; while(low &lt; high &amp;&amp; numbers[high] &gt; temp) &#123; high--; &#125; numbers[low] = numbers[high]; //比中轴小的记录移到低端 while(low &lt; high &amp;&amp; numbers[low] &lt; temp)&#123; low++; &#125; numbers[high] = numbers[low] ; //比中轴大的记录移到高端 &#125; numbers[low] = temp ; //中轴记录到尾 return low ; // 返回中轴的位置&#125; 2.3.2 递归形式的分治排序算法：123456789101112/** * @param numbers 带排序数组 * @param low 开始位置 * @param high 结束位置*/public static void quickSort(int[] numbers,int low,int high)&#123; if(low &lt; high)&#123; int middle = getMiddle(numbers,low,high); //将numbers数组进行一分为二 quickSort(numbers, low, middle-1); //对低字段表进行递归排序 quickSort(numbers, middle+1, high); //对高字段表进行递归排序 &#125;&#125; 2.3.3 快速排序提供方法调用：12345678/** * @param numbers 带排序数组*/public static void quick(int[] numbers)&#123; if(numbers.length &gt; 0) &#123; //查看数组是否为空 quickSort(numbers, 0, numbers.length-1); &#125;&#125; 2.4 分析：快速排序是通常被认为在同数量级（O(nlog2n)）的排序方法中平均性能最好的。但若初始序列按关键码有序或基本有序时，快排序反而蜕化为冒泡排序。为改进之，通常以“三者取中法”来选取基准记录，即将排序区间的两个端点与中点三个记录关键码居中的调整为支点记录。快速排序是一个不稳定的排序方法。 2.5 方法测试：2.5.1 打印函数：123456public static void printArr(int[] numbers) &#123; for(int i = 0 ; i &lt; numbers.length ; i ++ ) &#123; System.out.print(numbers[i] + &quot;,&quot;); &#125; System.out.println(&quot;&quot;);&#125; 2.5.2 测试：1234567891011public static void main(String[] args) &#123; int[] numbers = &#123;10,20,15,0,6,7,2,1,-5,55&#125;; System.out.print(&quot;排序前：&quot;); printArr(numbers); bubbleSort(numbers); System.out.print(&quot;冒泡排序后：&quot;); printArr(numbers); quick(numbers); System.out.print(&quot;快速排序后：&quot;); printArr(numbers);&#125; 2.5.3 结果：123排序前：10,20,15,0,6,7,2,1,-5,55,冒泡排序后：-5,0,1,2,6,7,10,15,20,55,快速排序后：-5,0,1,2,6,7,10,15,20,55, 三、选择排序3.1 基本思想：在要排序的一组数中，选出最小的一个数与第一个位置的数交换；然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。 3.2 实例 3.3 算法实现123456789101112131415161718192021222324/** * 选择排序算法 * 在未排序序列中找到最小元素，存放到排序序列的起始位置 * 再从剩余未排序元素中继续寻找最小元素，然后放到排序序列末尾。 * 以此类推，直到所有元素均排序完毕。 * @param numbers*/public static void selectSort(int[] numbers)&#123; int size = numbers.length; //数组长度 int temp = 0 ; //中间变量 for(int i = 0 ; i &lt; size ; i++)&#123; int k = i; //待确定的位置 //选择出应该在第i个位置的数 for(int j = size -1 ; j &gt; i ; j--)&#123; if(numbers[j] &lt; numbers[k])&#123; k = j; &#125; &#125; //交换两个数 temp = numbers[i]; numbers[i] = numbers[k]; numbers[k] = temp; &#125;&#125; 四、插入排序4.1 基本思想每步将一个待排序的记录，按其顺序码大小插入到前面已经排序的字序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。 4.2 实例 4.3 算法实现1234567891011121314151617181920212223/** * 从第一个元素开始，该元素可以认为已经被排序 * 取出下一个元素，在已经排序的元素序列中从后向前扫描 * 如果该元素（已排序）大于新元素，将该元素移到下一位置 * 重复步骤3，直到找到已排序的元素小于或者等于新元素的位置 * 将新元素插入到该位置中 * 重复步骤2 * @param numbers 待排序数组*/ public static void insertSort(int[] numbers)&#123; int size = numbers.length; int temp = 0 ; int j = 0; for(int i = 0 ; i &lt; size ; i++)&#123; temp = numbers[i]; //假如temp比前面的值小，则将前面的值后移 for(j = i ; j &gt; 0 &amp;&amp; temp &lt; numbers[j-1] ; j --)&#123; numbers[j] = numbers[j-1]; &#125; numbers[j] = temp; &#125;&#125; 4.4 效率：时间复杂度：O（n^2）。 五、希尔算法5.1 基本思想：先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。 5.2 操作方法： 选择一个增量序列t1，t2，…，tk，其中ti&gt;tj，tk=1； 按增量序列个数k，对序列进行k 趟排序； 每趟排序，根据对应的增量ti，将待排序列分割成若干长度为m 的子序列，分别对各子表进行直接插入排序。仅增量因子为1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。 希尔排序的示例： 5.3 算法实现：123456789101112131415161718192021222324252627/** * 希尔排序的原理:根据需求，如果你想要结果从大到小排列，它会首先将数组进行分组，然后将较大值移到前面，较小值； * 移到后面，最后将整个数组进行插入排序，这样比起一开始就用插入排序减少了数据交换和移动的次数，可以说希尔排序是加强版的插入排序； * 拿数组5, 2, 8, 9, 1, 3，4来说，数组长度为7，当increment为3时，数组分为两个序列5，2，8和9，1，3，4，第一次排序，9和5比较，1和2比较，3和8比较，4和比其下标值小increment的数组值相比较，此例子是按照从大到小排列，所以大的会排在前面，第一次排序后数组为9, 2, 8, 5, 1, 3，4； * 第一次后increment的值变为3/2=1,此时对数组进行插入排序，实现数组从大到小排。*/public static void shellSort(int[] data)&#123; int j = 0; int temp = 0; //每次将步长缩短为原来的一半 for (int increment = data.length / 2; increment &gt; 0;increment /= 2)&#123; for (int i = increment; i &lt; data.length; i++) &#123; temp = data[i]; for (j = i; j &gt;= increment; j -= increment) &#123; if(temp &gt; data[j - increment])&#123; //如想从小到大排只需修改这里 data[j] = data[j - increment]; &#125; else&#123; break; &#125; &#125; data[j] = temp; &#125; &#125;&#125; 5.4 效率时间复杂度：O（n^2）. 六、归并排序算法6.1 基本思想：归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表，即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列。 6.2 归并排序示例： 6.3 合并方法：设r[i…n]由两个有序子表r[i…m]和r[m+1…n]组成，两个子表长度分别为n-i +1、n-m。 a). j=m+1；k=i；i=i; //置两个子表的起始下标及辅助数组的起始下标；b). 若i&gt;m 或j&gt;n，转⑷ //其中一个子表已合并完，比较选取结束；c). 选取r[i]和r[j]较小的存入辅助数组rf； 如果r[i]&lt;r[j]，rf[k]=r[i]； i++； k++； 转⑵； 否则，rf[k]=r[j]； j++； k++； 转⑵ d). 将尚未处理完的子表中元素存入rf； 如果i&lt;=m，将r[i…m]存入rf[k…n] //前一子表非空； 如果j&lt;=n , 将r[j…n] 存入rf[k…n] //后一子表非空 e). 合并结束。 6.4 算法实现：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758/** * 归并排序 * 简介:将两个（或两个以上）有序表合并成一个新的有序表 即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列 * 时间复杂度为O(nlogn) * 稳定排序方式 * @param nums 待排序数组 * @return 输出有序数组*/public static int[] sort(int[] nums, int low, int high) &#123; int mid = (low + high) / 2; if (low &lt; high) &#123; // 左边 sort(nums, low, mid); // 右边 sort(nums, mid + 1, high); // 左右归并 merge(nums, low, mid, high); &#125; return nums;&#125;/** * 将数组中low到high位置的数进行排序 * @param nums 待排序数组 * @param low 待排的开始位置 * @param mid 待排中间位置 * @param high 待排结束位置*/public static void merge(int[] nums, int low, int mid, int high) &#123; int[] temp = new int[high - low + 1]; int i = low;// 左指针 int j = mid + 1;// 右指针 int k = 0; // 把较小的数先移到新数组中 while (i &lt;= mid &amp;&amp; j &lt;= high) &#123; if (nums[i] &lt; nums[j]) &#123; temp[k++] = nums[i++]; &#125; else &#123; temp[k++] = nums[j++]; &#125; &#125; // 把左边剩余的数移入数组 while (i &lt;= mid) &#123; temp[k++] = nums[i++]; &#125; // 把右边边剩余的数移入数组 while (j &lt;= high) &#123; temp[k++] = nums[j++]; &#125; // 把新数组中的数覆盖nums数组 for (int k2 = 0; k2 &lt; temp.length; k2++) &#123; nums[k2 + low] = temp[k2]; &#125;&#125; 七、堆排序算法7.1 基本思想：堆排序是一种树形选择排序，是对直接选择排序的有效改进。 堆的定义下：具有n个元素的序列 （h1,h2,…,hn),当且仅当满足（hi&gt;=h2i,hi&gt;=2i+1）或（hi&lt;=h2i,hi&lt;=2i+1） (i=1,2,…,n/2)时称之为堆。在这里只讨论满足前者条件的堆。由堆的定义可以看出，堆顶元素（即第一个元素）必为最大项（大顶堆）。完全二 叉树可以很直观地表示堆的结构。堆顶为根，其它为左子树、右子树。 思想：初始时把要排序的数的序列看作是一棵顺序存储的二叉树，调整它们的存储序，使之成为一个 堆，这时堆的根节点的数最大。然后将根节点与堆的最后一个节点交换。然后对前面(n-1)个数重新调整使之成为堆。依此类推，直到只有两个节点的堆，并对 它们作交换，最后得到有n个节点的有序序列。从算法描述来看，堆排序需要两个过程，一是建立堆，二是堆顶与堆的最后一个元素交换位置。所以堆排序有两个函数组成。一是建堆的渗透函数，二是反复调用渗透函数实现排序的函数。 7.2 实例初始序列：46, 79, 56, 38, 40, 8 1）建堆： 2）交换，从堆中踢出最大数 3）依次类推：最后堆中剩余的最后两个结点交换，踢出一个，排序完成。7.3 算法实现：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051public class HeapSort &#123; public static void main(String[] args) &#123; int[] a=&#123;49,38,65,97,76,13,27,49,78,34,12,64&#125;; int arrayLength=a.length; //循环建堆 for(int i=0;i&lt;arrayLength-1;i++)&#123; //建堆 buildMaxHeap(a,arrayLength-1-i); //交换堆顶和最后一个元素 swap(a,0,arrayLength-1-i); System.out.println(Arrays.toString(a)); &#125; &#125; //对data数组从0到lastIndex建大顶堆 public static void buildMaxHeap(int[] data, int lastIndex)&#123; //从lastIndex处节点（最后一个节点）的父节点开始 for(int i=(lastIndex-1)/2;i&gt;=0;i--)&#123; //k保存正在判断的节点 int k=i; //如果当前k节点的子节点存在 while(k*2+1&lt;=lastIndex)&#123; //k节点的左子节点的索引 int biggerIndex=2*k+1; //如果biggerIndex小于lastIndex，即biggerIndex+1代表的k节点的右子节点存在 if(biggerIndex&lt;lastIndex)&#123; //若果右子节点的值较大 if(data[biggerIndex]&lt;data[biggerIndex+1])&#123; //biggerIndex总是记录较大子节点的索引 biggerIndex++; &#125; &#125; //如果k节点的值小于其较大的子节点的值 if(data[k]&lt;data[biggerIndex])&#123; //交换他们 swap(data,k,biggerIndex); //将biggerIndex赋予k，开始while循环的下一次循环，重新保证k节点的值大于其左右子节点的值 k=biggerIndex; &#125;else&#123; break; &#125; &#125; &#125; &#125; //交换 private static void swap(int[] data, int i, int j) &#123; int tmp=data[i]; data[i]=data[j]; data[j]=tmp; &#125; &#125; 八、各种算法的时间复杂度 [相关博文]: 八大排序算法总结与java实现]]></content>
+      <categories>
+        <category>Java面经</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[windows常用命令行]]></title>
+    <url>%2F2019%2F01%2F09%2Fwindows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%2F</url>
+    <content type="text"><![CDATA[1. 用set password命令：mysql -u rootmysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;); 2. 查看端口号：netstat -ano3. 连接远程服务器：mstsc 4. 查看本机ip地址：ipconfig/all 5. 将mysql所有权赋予root账户：grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;; 6. 使操作生效：flush privileges 7. 创建账户root，密码为root：create user &#39;root&#39; identified by &#39;root&#39;； 8. 打开服务：services.msc 9. 连接远端或本地ip 端口号：telnet IP 端口号Ctrl+] 回车（显示回显）]]></content>
+      <categories>
+        <category>windows</category>
+      </categories>
+      <tags>
+        <tag>dos</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hexo命令]]></title>
+    <url>%2F2019%2F01%2F09%2FHexo%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[1. 常用hexo命令1234567hexo new &quot;postName&quot; #新建文章hexo new page &quot;pageName&quot; #新建页面hexo generate #生成静态页面至public目录hexo server #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）hexo deploy #部署到GitHubhexo help # 查看帮助hexo version #查看Hexo的版本 2. 缩写：1234hexo n == hexo newhexo g == hexo generatehexo s == hexo serverhexo d == hexo deploy 3. 组合命令：12hexo s -g #生成并本地预览hexo d -g #生成并上传]]></content>
+      <categories>
+        <category>GitHub</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+</search>
