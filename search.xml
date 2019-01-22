@@ -47,15 +47,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[远程连接数据库用户权限问题]]></title>
+    <title></title>
     <url>%2F2019%2F01%2F16%2F%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[一、错误描述：远程连接Mysql服务器的数据库，错误代码是1130，ERROR 1130: Host xxx.xxx.xxx.xxx is not allowed to connect to this MySQL server 二、解决方案：该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”localhost”改称’%’即可 。 2.1 具体解决方案：1、以权限用户root登录； mysql -u root -p 2、选择mysql库 ； mysql&gt; use mysql; 3、查看mysql库中的user表的host值（即可进行连接访问的主机/IP名称）； mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;; 4、修改host值（以通配符%的内容增加主机/IP地址），当然也可以直接增加IP地址 如果这步出先错误为: “ERROR 1062 (23000): Duplicate entry ‘%-root’ for key ‘PRIMARY’ “ 由说明该记录有了，跳过这步； mysql&gt; update user set host = &#39;%&#39; where user =&#39;root&#39;; 5、刷新MySQL的系统权限相关表 ； mysql&gt; flush privileges; 6、再重新查看user表时，有修改； mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;; 7、重起mysql服务即可完成。 mysql&gt; net start mysql]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-      </tags>
+    <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[Redis安装]]></title>
@@ -80,17 +74,6 @@
         <tag>mysql</tag>
         <tag>java</tag>
         <tag>jsp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[java垃圾回收机制]]></title>
-    <url>%2F2019%2F01%2F10%2Fjava%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>Java面经</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -138,36 +121,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[LOF离群点检测]]></title>
-    <url>%2F2019%2F01%2F09%2FLOF%E7%A6%BB%E7%BE%A4%E7%82%B9%E6%A3%80%E6%B5%8B%2F</url>
-    <content type="text"></content>
+    <title><![CDATA[windows常用命令行]]></title>
+    <url>%2F2019%2F01%2F09%2Fwindows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%2F</url>
+    <content type="text"><![CDATA[1. 用set password命令：mysql -u rootmysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;); 2. 查看端口号：netstat -ano3. 连接远程服务器：mstsc 4. 查看本机ip地址：ipconfig/all 5. 将mysql所有权赋予root账户：grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;; 6. 使操作生效：flush privileges 7. 创建账户root，密码为root：create user &#39;root&#39; identified by &#39;root&#39;； 8. 打开服务：services.msc 9. 连接远端或本地ip 端口号：telnet IP 端口号Ctrl+] 回车（显示回显）]]></content>
       <categories>
-        <category>python</category>
+        <category>windows</category>
       </categories>
       <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[spring]]></title>
-    <url>%2F2019%2F01%2F09%2Fspring%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>SSM</category>
-      </categories>
-      <tags>
-        <tag>spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[mybatis]]></title>
-    <url>%2F2019%2F01%2F09%2Fmybatis%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>SSM</category>
-      </categories>
-      <tags>
-        <tag>mybatis</tag>
+        <tag>dos</tag>
       </tags>
   </entry>
   <entry>
@@ -179,17 +140,6 @@
       </categories>
       <tags>
         <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[windows常用命令行]]></title>
-    <url>%2F2019%2F01%2F09%2Fwindows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%2F</url>
-    <content type="text"><![CDATA[1. 用set password命令：mysql -u rootmysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;); 2. 查看端口号：netstat -ano3. 连接远程服务器：mstsc 4. 查看本机ip地址：ipconfig/all 5. 将mysql所有权赋予root账户：grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;; 6. 使操作生效：flush privileges 7. 创建账户root，密码为root：create user &#39;root&#39; identified by &#39;root&#39;； 8. 打开服务：services.msc 9. 连接远端或本地ip 端口号：telnet IP 端口号Ctrl+] 回车（显示回显）]]></content>
-      <categories>
-        <category>windows</category>
-      </categories>
-      <tags>
-        <tag>dos</tag>
       </tags>
   </entry>
   <entry>
