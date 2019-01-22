@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-22T06:02:28.058Z</updated>
+  <updated>2019-01-22T11:42:20.587Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Tomcat的基本原理</title>
+    <link href="http://yoursite.com/2019/01/22/Tomcat%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86/"/>
+    <id>http://yoursite.com/2019/01/22/Tomcat的基本原理/</id>
+    <published>2019-01-22T10:41:48.000Z</published>
+    <updated>2019-01-22T11:42:20.587Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h3 id="一、Tomcat运行原理分析"><a href="#一、Tomcat运行原理分析" class="headerlink" title="一、Tomcat运行原理分析"></a>一、Tomcat运行原理分析</h3><p><strong>1、</strong>Tomcat是运行在JVM中的一个进程。它定义为【中间件】，即是一个在Java项目与JVM之间的中间容器。</p><p><strong>2、</strong>Web项目的本质，是一大堆的资源文件和方法。Web项目没有入口方法(main方法)，意味着Web项目中的方法不会自动运行起来。</p><p><strong>3、</strong>Web项目部署到Tomcat的webapp目录下，目的是希望Tomcat去调用已经写好的方法去为客户端返回需要的资源和数据。</p><p><strong>4、</strong>Tomcat可以运行起来，并调用写好的方法。那么，Tomcat一定有一个main方法。</p><p><strong>5、</strong>对于Tomcat而言，它并不知道我们会有什么样的方法，这些都只是在项目被部署到webapp目录下后才确定的。所以，必然用到了Java的反射来实现类的动态加载、实例化、获取方法、调用方法。但是我们部署到Tomcat的中的Web项目必须是按照规定好的接口来进行编写，以便进行调用。</p><p><strong>6、</strong>Tomcat如何确定调用什么方法呢。这取却于客户端的请求，<a href="http://127.0.0.1:8080/ETMS/login.jsp?login这样的一个请求，通过http协议，在浏览器发往本机的8080端口，携带的参数show方法，包含此方法的路径为ETMS，文件名为：login.jsp。" target="_blank" rel="noopener">http://127.0.0.1:8080/ETMS/login.jsp?login这样的一个请求，通过http协议，在浏览器发往本机的8080端口，携带的参数show方法，包含此方法的路径为ETMS，文件名为：login.jsp。</a></p><h3 id="二、Tomcat-Server的组成部分"><a href="#二、Tomcat-Server的组成部分" class="headerlink" title="二、Tomcat Server的组成部分"></a>二、Tomcat Server的组成部分</h3><p><strong>2.1 Server</strong></p><p>A Server element represents the entire Catalina servlet container. (Singleton)</p><p><strong>2.2 Service</strong><br>Service是这样一个集合：它由一个或者多个Connector组成，以及一个Engine，负责处理所有Connector所获得的客户请求。</p><p><strong>2.3 Connector</strong></p><p><strong>1、</strong>一个Connector将在某个指定端口上侦听客户请求，并将获得的请求交给Engine来处理，从Engine处获得回应并返回客户。</p><p><strong>2、</strong>Tomcat有两个典型的Connector，一个直接侦听来自browser的http请求，一个侦听来自其它WebServer的请求。</p><ul><li>Coyote Http/1.1 Connector 在端口8080处侦听来自客户browser的http请求；</li><li>Coyote JK2 Connector 在端口8009处侦听来自其它WebServer(Apache)的servlet/jsp代理请求。</li></ul><p><strong>2.4 Engine</strong></p><ul><li>Engine下可以配置多个虚拟主机Virtual Host，每个虚拟主机都有一个域名；</li><li>当Engine获得一个请求时，它把该请求匹配到某个Host上，然后把该请求交给该Host来处理；</li><li>Engine有一个默认虚拟主机，当请求无法匹配到任何一个Host上的时候，将交给该默认Host来处理。</li></ul><p><strong>2.5 Host</strong></p><ul><li>代表一个Virtual Host，虚拟主机，每个虚拟主机和某个网络域名Domain Name相匹配；</li><li>每个虚拟主机下都可以部署(deploy)一个或者多个Web App，每个Web App对应于一个Context，有一个Context path。当Host获得一个请求时，将把该请求匹配到某个Context上，然后把该请求交给该Context来处理；</li><li>匹配的方法是“最长匹配”，所以一个path==””的Context将成为该Host的默认Context，所有无法和其它Context的路径名匹配的请求都将最终和该默认Context匹配。</li></ul><p><strong>2.6 Context</strong></p><ul><li>一个Context对应于一个Web Application，一个Web Application由一个或者多个Servlet组成Context在创建的时候将根据配置文件$CATALINA_HOME/conf/web.xml和$WEBAPP_HOME/WEB-INF/web.xml载入Servlet类；</li><li>当Context获得请求时，将在自己的映射表(mapping table)中寻找相匹配的Servlet类，如果找到，则执行该类，获得请求的回应，并返回。</li></ul><p><strong>2.7 Tomcat Server的结构图</strong></p><p><img src="http://docs.huihoo.com/apache/tomcat/heavyz/01-startup.gif" alt="img"></p><p><strong>2.8 Tomcat的启动过程</strong></p><p><strong>1、</strong>Tomcat 先根据<strong>/conf/server.xml</strong> 下的配置启动Server，再加载Service，对于与Engine相匹配的Host，每个Host 下面都有一个或多个Context。</p><p><strong>注意：Context 既可配置在server.xml 下，也可配置成一单独的文件，放在conf\Catalina\localhost 下，简称应用配置文件。</strong></p><p><strong>2、</strong>Web Application 对应一个Context，每个Web Application 由一个或多个Servlet 组成。当一个Web Application 被初始化的时候，它将用自己的ClassLoader 对象载入部署配置文件web.xml 中定义的每个Servlet 类：它首先载入在$CATALINA_HOME/conf/web.xml中部署的Servlet 类，然后载入在自己的Web Application 根目录下WEB-INF/web.xml 中部署的Servlet 类。</p><p><strong>3、</strong>web.xml 文件有两部分：Servlet 类定义和Servlet 映射定义。</p><p>每个被载入的Servlet 类都有一个名字，且被填入该Context 的映射表(mapping table)中，和某种URL 路径对应。当该Context 获得请求时，将查询mapping table，找到被请求的Servlet，并执行以获得请求响应。</p><h3 id="三、Tomcat-Server处理一个http请求的过程"><a href="#三、Tomcat-Server处理一个http请求的过程" class="headerlink" title="三、Tomcat Server处理一个http请求的过程"></a>三、Tomcat Server处理一个http请求的过程</h3><p>假设来自客户的请求为：<br><a href="http://localhost:8080/wsota/wsota_index.jsp" target="_blank" rel="noopener">http://localhost:8080/wsota/wsota_index.jsp</a></p><p><strong>1)</strong> 请求被发送到本机端口8080，被在那里侦听的Coyote HTTP/1.1 Connector获得；<br><strong>2)</strong> Connector把该请求交给它所在的Service的Engine来处理，并等待来自Engine的回应；<br><strong>3)</strong> Engine获得请求localhost/wsota/wsota_index.jsp，匹配它所拥有的所有虚拟主机Host；<br><strong>4)</strong> Engine匹配到名为localhost的Host（即使匹配不到也把请求交给该Host处理，因为该Host被定义为该Engine的默认主机）；<br><strong>5)</strong> localhost Host获得请求/wsota/wsota_index.jsp，匹配它所拥有的所有Context；<br><strong>6)</strong> Host匹配到路径为/wsota的Context（如果匹配不到就把该请求交给路径名为””的Context去处理）；<br><strong>7)</strong> path=”/wsota”的Context获得请求/wsota_index.jsp，在它的mapping table中寻找对应的servlet；<br><strong>8)</strong> Context匹配到URL PATTERN为*.jsp的servlet，对应于JspServlet类；<br><strong>9)</strong> 构造HttpServletRequest对象和HttpServletResponse对象，作为参数调用JspServlet的doGet或doPost方法；<br><strong>10)</strong> Context把执行完了之后的HttpServletResponse对象返回给Host；<br><strong>11)</strong> Host把HttpServletResponse对象返回给Engine；<br><strong>12)</strong> Engine把HttpServletResponse对象返回给Connector；<br><strong>13)</strong> Connector把HttpServletResponse对象返回给客户browser。</p><h3 id="四、Tomcat原理总结"><a href="#四、Tomcat原理总结" class="headerlink" title="四、Tomcat原理总结"></a>四、Tomcat原理总结</h3><p><strong>1、</strong>Tomcat需要main方法启动。</p><p><strong>2、</strong>Tomcat需要监听本机上的某个端口。</p><p><strong>3、</strong>Tomcat需要获取此端口上来自客户端的链接并获得请求调用的方法与参数。</p><p><strong>4、</strong>Tomcat需要根据请求调用的方法，动态地加载方法所在的类，完成累的实例化并通过该实例获得需要的方法最终将请求传入方法执行。</p><p><strong>5、</strong>将结果返回给客户端（jsp/html页面、json/xml字符串）。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h3 id=&quot;一、Tomcat运行原理分析&quot;&gt;&lt;a href=&quot;#一、Tomcat运行原理分析&quot; class=&quot;headerlink&quot; title=&quot;一、Tomcat运行原理分析&quot;&gt;&lt;/a&gt;一、Tomcat运行原理分析&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1、&lt;/stron
+      
+    
+    </summary>
+    
+      <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
+    
+    
+      <category term="tomcat" scheme="http://yoursite.com/tags/tomcat/"/>
+    
+  </entry>
   
   <entry>
     <title>@Autowired和@Resource的区别</title>
@@ -39,9 +65,9 @@
       <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
     
     
-      <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
-    
       <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
+    
+      <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
     
   </entry>
   
@@ -67,9 +93,9 @@
       <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
     
     
-      <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
-    
       <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
+    
+      <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
     
   </entry>
   
@@ -173,11 +199,11 @@
       <category term="项目总结" scheme="http://yoursite.com/categories/%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
     
       <category term="jsp" scheme="http://yoursite.com/tags/jsp/"/>
     
@@ -353,32 +379,6 @@
   </entry>
   
   <entry>
-    <title>windows常用命令行</title>
-    <link href="http://yoursite.com/2019/01/09/windows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
-    <id>http://yoursite.com/2019/01/09/windows常用命令行/</id>
-    <published>2019-01-09T09:15:25.000Z</published>
-    <updated>2019-01-16T10:28:21.215Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
-      
-    
-    </summary>
-    
-      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
-    
-    
-      <category term="dos" scheme="http://yoursite.com/tags/dos/"/>
-    
-  </entry>
-  
-  <entry>
     <title>java排序算法</title>
     <link href="http://yoursite.com/2019/01/09/java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/01/09/java排序算法/</id>
@@ -401,6 +401,32 @@
     
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows常用命令行</title>
+    <link href="http://yoursite.com/2019/01/09/windows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
+    <id>http://yoursite.com/2019/01/09/windows常用命令行/</id>
+    <published>2019-01-09T09:15:25.000Z</published>
+    <updated>2019-01-16T10:28:21.215Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
+    
+    
+      <category term="dos" scheme="http://yoursite.com/tags/dos/"/>
     
   </entry>
   
