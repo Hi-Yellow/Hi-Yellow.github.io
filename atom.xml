@@ -65,9 +65,9 @@
       <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
     
     
-      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
-    
       <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
+    
+      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
     
   </entry>
   
@@ -93,9 +93,9 @@
       <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
     
     
-      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
-    
       <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
+    
+      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
     
   </entry>
   
@@ -201,9 +201,9 @@
     
       <category term="python" scheme="http://yoursite.com/tags/python/"/>
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
-    
       <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+      <category term="java" scheme="http://yoursite.com/tags/java/"/>
     
       <category term="jsp" scheme="http://yoursite.com/tags/jsp/"/>
     
