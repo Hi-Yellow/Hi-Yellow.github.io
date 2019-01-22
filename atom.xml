@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-18T13:11:37.072Z</updated>
+  <updated>2019-01-22T02:11:31.503Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>@Autowired和@Resource的区别</title>
+    <link href="http://yoursite.com/2019/01/22/@Autowired%E5%92%8C@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://yoursite.com/2019/01/22/@Autowired和@Resource的区别/</id>
+    <published>2019-01-22T01:33:41.000Z</published>
+    <updated>2019-01-22T02:11:31.503Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>@Resource和@Autowired都是做bean的注入时使用，其实@Resource并不是Spring的注解，它的包是javax.annotation.Resource，需要导入，但是Spring支持该注解的注入。</p><h3 id="一、共同点"><a href="#一、共同点" class="headerlink" title="一、共同点"></a>一、共同点</h3><p>两者都可以写在字段和setter方法上。两者如果都写在字段上，那么就不需要再写setter方法。</p><h3 id="二、不同点"><a href="#二、不同点" class="headerlink" title="二、不同点"></a>二、不同点</h3><h4 id="2-1-Autowired"><a href="#2-1-Autowired" class="headerlink" title="2.1 @Autowired"></a>2.1 @Autowired</h4><p>1、@Autowired为Spring提供的注解，需要导入包org.springframework.beans.factory.annotation.Autowired，只按照byType注入。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class TestServiceImpl &#123;</span><br><span class="line">    // 下面两种@Autowired只要使用一种即可</span><br><span class="line">    @Autowired</span><br><span class="line">    private UserDao userDao; // 用于字段上</span><br><span class="line">    </span><br><span class="line">@Autowired</span><br><span class="line">public void setUserDao(UserDao userDao) &#123;  // 用于属性的方法上</span><br><span class="line">this.userDao = userDao;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>2、@Autowired注解是按照类型（byType）装配依赖对象，默认情况下它要求依赖对象必须存在，如果允许null值，可以设置它的required属性为false。如果我们想使用按照名称（byName）来装配，可以结合@Qualifier注解一起使用。如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class TestServiceImpl &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    @Qualifier(&quot;userDao&quot;)</span><br><span class="line">    private UserDao userDao; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="2-2-Resource"><a href="#2-2-Resource" class="headerlink" title="2.2 @Resource"></a>2.2 @Resource</h4><p>1、@Resource默认按照ByName自动注入，由J2EE提供，需要导入包javax.annotation.Resource。@Resource有两个重要的属性：name和type，而Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以，如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不制定name也不制定type属性，这时将通过反射机制使用byName自动注入策略。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class TestServiceImpl &#123;</span><br><span class="line">    // 下面两种@Resource只要使用一种即可</span><br><span class="line">    @Resource(name=&quot;userDao&quot;)</span><br><span class="line">    private UserDao userDao; // 用于字段上</span><br><span class="line">    </span><br><span class="line">@Resource(name=&quot;userDao&quot;)</span><br><span class="line">public void setUserDao(UserDao userDao) &#123; // 用于属性的setter方法上</span><br><span class="line">    this.userDao = userDao;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>2、@Resource的作用相当于@Autowired，只不过@Autowired按byType自动注入，而@Resource默认按 byName自动注入。@Resource有两个重要的属性，分别是name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。</p><p>3、@Resource装配顺序</p><ul><li><p>如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常；</p></li><li><p>如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常；</p></li><li><p>如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常；</p></li><li><p>如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配。</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;@Resource和@Autowired都是做bean的注入时使用，其实@Resource并不是Spring的注解，它的包是javax.annotation.Resource，需要导入，但是Spring支持该注解的注入。&lt;/p&gt;
+&lt;h3 id=&quot;一、共同点&quot;&gt;&lt;a
+      
+    
+    </summary>
+    
+      <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
+    
+    
+      <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
+    
+      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
+    
+  </entry>
   
   <entry>
     <title>Filter和Interceptor区别</title>
@@ -119,32 +148,6 @@
     
     
       <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring MVC的请求过程</title>
-    <link href="http://yoursite.com/2019/01/16/Spring%20MVC%E7%9A%84%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/"/>
-    <id>http://yoursite.com/2019/01/16/Spring MVC的请求过程/</id>
-    <published>2019-01-16T09:50:37.000Z</published>
-    <updated>2019-01-18T04:12:38.652Z</updated>
-    
-    <content type="html"><![CDATA[<hr><p><img src="https://img-blog.csdnimg.cn/20190117192505106.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3NTI1NTUx,size_16,color_FFFFFF,t_70" alt="springmvc"></p><p>1、客户端发出 http 请求，只要请求形式符合 web.xml 文件中配置的 *.action 的话，就由 DispatcherServlet 来处理；</p><p>2、DispatcherServlet 再将 http 请求委托给映射器的对象来将 http 请求交给对应的 Action 来处理；</p><p>3、映射器根据客户的 http 请求，再对比 &lt;bean name=”/hello.action 如果匹配正确，再将 http 请求交给程序员写的 Action；</p><p>4、执行 Action 中的业务方法，最终返回一个名叫 ModelAndView 的对象，其中封装了向视图发送的数据和视图的逻辑名；</p><p>5、ModelAndView 对象随着响应到 DispatcherServlet 中了；</p><p>6、这时 DispatcherServlet 收到了 ModelAndView 对象，它也不知道视图逻辑名是何意，又得委托一个名叫视图解析器的对象去具体解析 ModelAndView 对象中的内容；</p><p>7、将视图解析器解析后的内容，再次交由 DispatcherServlet 核心控制器，这时核心控制器再将请求转发到具体的视图页面，取出数据，再显示给用户。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;p&gt;&lt;img src=&quot;https://img-blog.csdnimg.cn/20190117192505106.JPG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aH
-      
-    
-    </summary>
-    
-      <category term="SSM" scheme="http://yoursite.com/categories/SSM/"/>
-    
-    
-      <category term="springmvc" scheme="http://yoursite.com/tags/springmvc/"/>
     
   </entry>
   
@@ -350,32 +353,6 @@
   </entry>
   
   <entry>
-    <title>windows常用命令行</title>
-    <link href="http://yoursite.com/2019/01/09/windows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
-    <id>http://yoursite.com/2019/01/09/windows常用命令行/</id>
-    <published>2019-01-09T09:15:25.000Z</published>
-    <updated>2019-01-16T10:28:21.215Z</updated>
-    
-    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;hr&gt;
-&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
-      
-    
-    </summary>
-    
-      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
-    
-    
-      <category term="dos" scheme="http://yoursite.com/tags/dos/"/>
-    
-  </entry>
-  
-  <entry>
     <title>java排序算法</title>
     <link href="http://yoursite.com/2019/01/09/java%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/01/09/java排序算法/</id>
@@ -398,6 +375,32 @@
     
     
       <category term="java" scheme="http://yoursite.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>windows常用命令行</title>
+    <link href="http://yoursite.com/2019/01/09/windows%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C/"/>
+    <id>http://yoursite.com/2019/01/09/windows常用命令行/</id>
+    <published>2019-01-09T09:15:25.000Z</published>
+    <updated>2019-01-16T10:28:21.215Z</updated>
+    
+    <content type="html"><![CDATA[<hr><h4 id="1-用set-password命令："><a href="#1-用set-password命令：" class="headerlink" title="1. 用set password命令："></a>1. 用set password命令：</h4><p><code>mysql -u root</code><br><code>mysql&gt; SET PASSWORD FOR &#39;root&#39;@&#39;localhost&#39; = PASSWORD(&#39;newpass&#39;);</code></p><h4 id="2-查看端口号："><a href="#2-查看端口号：" class="headerlink" title="2. 查看端口号："></a>2. 查看端口号：</h4><h5 id="netstat-ano"><a href="#netstat-ano" class="headerlink" title="netstat -ano"></a><code>netstat -ano</code></h5><h4 id="3-连接远程服务器："><a href="#3-连接远程服务器：" class="headerlink" title="3. 连接远程服务器："></a>3. 连接远程服务器：</h4><p><code>mstsc</code></p><h4 id="4-查看本机ip地址："><a href="#4-查看本机ip地址：" class="headerlink" title="4. 查看本机ip地址："></a>4. 查看本机ip地址：</h4><p><code>ipconfig/all</code></p><h4 id="5-将mysql所有权赋予root账户："><a href="#5-将mysql所有权赋予root账户：" class="headerlink" title="5. 将mysql所有权赋予root账户："></a>5. 将mysql所有权赋予root账户：</h4><p><code>grant select,update,insert,delete on *.* to root@127.0.0.1 identified by &quot;root&quot;;</code></p><h4 id="6-使操作生效："><a href="#6-使操作生效：" class="headerlink" title="6. 使操作生效："></a>6. 使操作生效：</h4><p><code>flush privileges</code></p><h4 id="7-创建账户root，密码为root："><a href="#7-创建账户root，密码为root：" class="headerlink" title="7. 创建账户root，密码为root："></a>7. 创建账户root，密码为root：</h4><p><code>create user &#39;root&#39; identified by &#39;root&#39;；</code></p><h4 id="8-打开服务："><a href="#8-打开服务：" class="headerlink" title="8. 打开服务："></a>8. 打开服务：</h4><p><code>services.msc</code></p><h4 id="9-连接远端或本地ip-端口号："><a href="#9-连接远端或本地ip-端口号：" class="headerlink" title="9. 连接远端或本地ip 端口号："></a>9. 连接远端或本地ip 端口号：</h4><p><code>telnet IP 端口号</code><br><code>Ctrl+]  回车（显示回显）</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;h4 id=&quot;1-用set-password命令：&quot;&gt;&lt;a href=&quot;#1-用set-password命令：&quot; class=&quot;headerlink&quot; title=&quot;1. 用set password命令：&quot;&gt;&lt;/a&gt;1. 用set password命令：&lt;/h4&gt;&lt;p
+      
+    
+    </summary>
+    
+      <category term="windows" scheme="http://yoursite.com/categories/windows/"/>
+    
+    
+      <category term="dos" scheme="http://yoursite.com/tags/dos/"/>
     
   </entry>
   
