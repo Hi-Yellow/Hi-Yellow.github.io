@@ -130,7 +130,7 @@
     <link href="http://yoursite.com/2019/01/16/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2019/01/16/远程连接数据库用户权限问题/</id>
     <published>2019-01-16T10:30:56.000Z</published>
-    <updated>2019-01-22T13:41:36.934Z</updated>
+    <updated>2019-01-22T13:49:49.162Z</updated>
     
     <content type="html"><![CDATA[<hr><h3 id="一、错误描述："><a href="#一、错误描述：" class="headerlink" title="一、错误描述："></a>一、错误描述：</h3><p>远程连接Mysql服务器的数据库，错误代码是1130，<strong>ERROR 1130: Host xxx.xxx.xxx.xxx  is not allowed to connect to this MySQL server</strong>  </p><h3 id="二、解决方案："><a href="#二、解决方案：" class="headerlink" title="二、解决方案："></a>二、解决方案：</h3><p>该错误应该是由远程连接的用户权限问题引起的，在本机登入mysql后，更改 “mysql” 数据库里的 “user” 表里的 “host” 项，从”localhost”改称’%’即可 。 </p><h4 id="2-1-具体解决方案："><a href="#2-1-具体解决方案：" class="headerlink" title="2.1 具体解决方案："></a>2.1 具体解决方案：</h4><p>1、以权限用户root登录；</p><p><code>mysql -u root -p</code>  </p><p>2、选择mysql库 ；</p><p><code>mysql&gt; use mysql;</code> </p><p>3、查看mysql库中的user表的host值（即可进行连接访问的主机/IP名称）；</p><p><code>mysql&gt; select &#39;host&#39; from user where user=&#39;root&#39;;</code>  </p><p>4、修改host值（以通配符%的内容增加主机/IP地址），当然也可以直接增加IP地址  </p><p>如果这步出先错误为: <strong>“ERROR 1062 (23000): Duplicate entry ‘%-root’ for key ‘PRIMARY’ “</strong>  由说明该记录有了，跳过这步；</p><p><code>mysql&gt; update user set host = &#39;%&#39; where user =&#39;root&#39;;</code>  </p><p>5、刷新MySQL的系统权限相关表  ；</p><p><code>mysql&gt; flush privileges;</code>  </p><p>6、再重新查看user表时，有修改；</p><p><code>mysql&gt; select &#39;host&#39;   from user where user=&#39;root&#39;;</code>    </p><p>7、重起mysql服务即可完成。 </p><p><code>mysql&gt; net start mysql</code></p>]]></content>
     
