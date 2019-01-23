@@ -8,8 +8,8 @@
         <category>类加载器</category>
       </categories>
       <tags>
-        <tag>jvm</tag>
         <tag>tomcat</tag>
+        <tag>jvm</tag>
       </tags>
   </entry>
   <entry>
