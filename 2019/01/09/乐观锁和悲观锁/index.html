@@ -103,15 +103,18 @@
 
 
 
+<meta name="description" content="一、乐观锁1.1 概念乐观锁是指操作数据库时(更新操作)，想法很乐观，认为每次的操作不会导致冲突，所以操作数据时不加锁，操作完成后，再判断是否有冲突。（乐观锁适用于多读的应用类型，这样可以提高吞吐量）。在Java中java.util.concurrent.atomic包下面的原子变量类就是使用了乐观锁的一种实现方式CAS实现的。 1.2 实现主要有版本号机制或CAS算法两种。 1、版本号机制 前">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="乐观锁和悲观锁">
 <meta property="og:url" content="http://yoursite.com/2019/01/09/乐观锁和悲观锁/index.html">
 <meta property="og:site_name" content="Hi-Yellow">
+<meta property="og:description" content="一、乐观锁1.1 概念乐观锁是指操作数据库时(更新操作)，想法很乐观，认为每次的操作不会导致冲突，所以操作数据时不加锁，操作完成后，再判断是否有冲突。（乐观锁适用于多读的应用类型，这样可以提高吞吐量）。在Java中java.util.concurrent.atomic包下面的原子变量类就是使用了乐观锁的一种实现方式CAS实现的。 1.2 实现主要有版本号机制或CAS算法两种。 1、版本号机制 前">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-10T09:30:37.483Z">
+<meta property="og:updated_time" content="2019-01-24T07:28:38.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="乐观锁和悲观锁">
+<meta name="twitter:description" content="一、乐观锁1.1 概念乐观锁是指操作数据库时(更新操作)，想法很乐观，认为每次的操作不会导致冲突，所以操作数据时不加锁，操作完成后，再判断是否有冲突。（乐观锁适用于多读的应用类型，这样可以提高吞吐量）。在Java中java.util.concurrent.atomic包下面的原子变量类就是使用了乐观锁的一种实现方式CAS实现的。 1.2 实现主要有版本号机制或CAS算法两种。 1、版本号机制 前">
 
 
 
@@ -407,7 +410,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  871 字
                 </span>
 				
                 <span class="post-meta-divider">|</span>
@@ -421,7 +424,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-				  1 分钟
+				  3 分钟
 				</span>
           
 
@@ -440,7 +443,32 @@
       
 
       
-        
+        <hr>
+<h3 id="一、乐观锁"><a href="#一、乐观锁" class="headerlink" title="一、乐观锁"></a>一、乐观锁</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h4><p>乐观锁是指操作数据库时(更新操作)，想法很乐观，认为每次的操作不会导致冲突，所以操作数据时不加锁，操作完成后，再判断是否有冲突。<strong>（乐观锁适用于多读的应用类型，这样可以提高吞吐量）</strong>。在Java中<code>java.util.concurrent.atomic</code>包下面的原子变量类就是使用了乐观锁的一种实现方式CAS实现的。</p>
+<h4 id="1-2-实现"><a href="#1-2-实现" class="headerlink" title="1.2 实现"></a>1.2 实现</h4><p>主要有版本号机制或CAS算法两种。</p>
+<p><strong>1、版本号机制</strong></p>
+<p>前提是操作的数据库表有version字段，每次更新操作，都会将version字段值加1。一次完整的更新操作分为两步：（以更新状态为例）</p>
+<p>1）查出更新行信息，包含version字段。</p>
+<p>select (status, version) from table where id = #{id};</p>
+<p>2）更新行信息，version字段加1。</p>
+<p>update table set status = #{status}, version = version+1 where id=#{id} and version=#{version};</p>
+<p><strong>注：#{version}的值就是第一步查询出来的version值</strong>。</p>
+<p>如果在更新期间有其他线程更新了该行，就会导致本次更新失败。</p>
+<p><strong>2、CAS算法</strong></p>
+<p>即compare and swap（比较并交换） 或者 compare and set，涉及到三个操作数，数据所在的内存值，预期值，新值。当需要更新时，判断当前内存值与之前取到的值是否相等，若相等，则用新值更新，若失败则重试，一般情况下是一个自旋操作，即不断的重试。</p>
+<h3 id="二、悲观锁："><a href="#二、悲观锁：" class="headerlink" title="二、悲观锁："></a>二、悲观锁：</h3><h4 id="2-1-概念"><a href="#2-1-概念" class="headerlink" title="2.1 概念"></a>2.1 概念</h4><p>悲观锁是指操作数据库时(更新操作)，想法很悲观，认为每次的操作都会导致冲突，所以操作数据时都会加锁<strong>（共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程）</strong>。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。Java中<code>synchronized</code>和<code>ReentrantLock</code>等独占锁就是悲观锁思想的实现。</p>
+<h4 id="2-2-实现"><a href="#2-2-实现" class="headerlink" title="2.2 实现"></a>2.2 实现</h4><p>共享锁和排它锁</p>
+<p> <strong>1、共享锁【S锁】</strong></p>
+<p>又称读锁，若事务T对数据对象A加上S锁，则事务T可以读A但不能修改A，其他事务只能再对A加S锁，而不能加X锁，直到T释放A上的S锁。这保证了其他事务可以读A，但在T释放A上的S锁之前不能对A做任何修改。</p>
+<p>sql实现：在执行语句后加”lock in share mode”。</p>
+<p> <strong>2、排他锁【X锁】</strong></p>
+<p>又称写锁。若事务T对数据对象A加上X锁，事务T可以读A也可以修改A，其他事务不能再对A加任何锁，直到T释放A上的锁。这保证了其他事务在T释放A上的锁之前不能再读取和修改A。</p>
+<p>sql实现：在执行语句后加”for update”。</p>
+<h3 id="三、两种锁的使用场景"><a href="#三、两种锁的使用场景" class="headerlink" title="三、两种锁的使用场景"></a>三、两种锁的使用场景</h3><ul>
+<li>两种锁各有优缺点，不可认为一种好于另一种，像<strong>乐观锁适用于写比较少的情况下（多读场景）</strong>，即冲突真的很少发生的时候，这样可以省去了锁的开销，加大了系统的整个吞吐量。</li>
+<li>如果是多写的情况，一般会经常产生冲突，这就会导致上层应用会不断的进行retry，这样反倒是降低了性能，所以<strong>一般多写的场景下用悲观锁就比较合适</strong>。</li>
+</ul>
+
       
     </div>
     
@@ -517,8 +545,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/09/windows常用命令行/" rel="next" title="windows常用命令行">
-                <i class="fa fa-chevron-left"></i> windows常用命令行
+              <a href="/2019/01/09/java排序算法/" rel="next" title="java排序算法">
+                <i class="fa fa-chevron-left"></i> java排序算法
               </a>
             
           </div>
@@ -616,8 +644,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -720,6 +757,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、乐观锁"><span class="nav-number">1.</span> <span class="nav-text">一、乐观锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-概念"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-实现"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、悲观锁："><span class="nav-number">2.</span> <span class="nav-text">二、悲观锁：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-概念"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-实现"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、两种锁的使用场景"><span class="nav-number">3.</span> <span class="nav-text">三、两种锁的使用场景</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -752,7 +805,7 @@
 <span class="post-meta-divider">|</span>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共18.7k字</span>
+  <span class="post-count">博客全站共19.6k字</span>
 </div>
 <br>
 
